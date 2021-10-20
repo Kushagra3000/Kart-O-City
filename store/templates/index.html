@@ -29,14 +29,21 @@
 			<div class="row mx-auto">
 				{% for product in products %}
 				<div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
-					<img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
+					<!-- <img class="card-img-top" src="{{product.image.url}}" alt="Card image cap"> -->
+					<form class="btn-light" method=POST action="{% url 'product-details' %}">
+							{% csrf_token %}
+							<input hidden type="text" name="clickedproduct" value="{{product.id}}">
+							<input type="image" value=image class="card-img-top" src="{{product.image.url}}">
+
+						</form>
+						  
 					<div class="card-body">
 						<p class="card-title">{{product.name}}</p>
 						<p class="card-text"><b>{{product.price|currency}}</b></p>
 						<!-- {{product | is_in_cart:request.session.cart }} -->
 					</div>
 
-					<div class="card-footer p-0 no-gutters">
+					<!-- <div class="card-footer p-0 no-gutters">
 
 						{% if product|is_in_cart:request.session.cart %}
 						<div class="row no-gutters">
@@ -62,7 +69,7 @@
 						</form>
 						{% endif %}
 
-					</div>
+					</div> -->
 
 				</div>
 				{% endfor %}

@@ -8,6 +8,7 @@ from django.views import View
 class Index(View):
 
     def post(self , request):
+        
         product = request.POST.get('product')
         remove = request.POST.get('remove')
         cart = request.session.get('cart')

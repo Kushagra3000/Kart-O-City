@@ -15,16 +15,13 @@
 
 						<form class="btn-light" method=POST action="{% url 'product-details' %}">
 							{% csrf_token %}
-							<input type="hidden" name="clickedproduct" value="{{product.id}}">
+							<input hidden type="text" name="clickedproduct" value="{{product.id}}">
 							<!-- <input  class="form-control me-2" type="image" value="blue" alt="blue" src="{{product.image.url}}"> -->
 
 							<input type="image" value=image class="card-img-top" src="{{product.image.url}}">
 
 						</form>
 						  
-
-						
-
 
 
 						<div class="card-body">

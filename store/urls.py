@@ -9,6 +9,8 @@ from .views.orders import OrderView
 from .middlewares.auth import  auth_middleware
 from .views import searchproduct
 from .views import productdetails
+from .views import productdetail
+from .views import payment
 from django.conf.urls.static import static
 from kartocity import settings
 
@@ -25,4 +27,6 @@ urlpatterns = [
     path('orders', auth_middleware(OrderView.as_view()), name='orders'),
     path('searchproduct', searchproduct.search_products, name='search-products'),
     path('productdetails', productdetails.product_details, name='product-details'),
+    path('productdetail', productdetail.product_details2, name='product-details2'),
+    path('payment', payment.charge, name='pay-charge'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,4 @@
-#!c:\users\hp\desktop\kartocity\venv\scripts\python.exe
+#!c:\users\hp\desktop\kart-o-city\venv\scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 

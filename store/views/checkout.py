@@ -7,6 +7,9 @@ from django.views import View
 from store.models.product import Product
 from store.models.orders import Order
 
+import stripe
+stripe.api_key = "sk_test_51JmIDPSBqyUCoZseF730Qo1N6CQxGTbnXiGuZ8w8cKrRPWPfil82zcW2gRkhlKaDiaonYP0lfMpIyZMcjOqe4hMk00nltTe3sp"
+
 
 class CheckOut(View):
     def post(self, request):

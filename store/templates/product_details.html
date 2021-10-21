@@ -5,8 +5,17 @@
 {% load cart %}
 {% load custom_filter %}
 
+<style>
+.down{
+  margin-top: 40px;
+}
 
-<section class="mb-5">
+body{
+    background-color: #EDEDED !important;
+}
+</style>
+
+<section class="margin-top: 10;">
 
   {% for product in clickedproduct %}
 
@@ -17,7 +26,7 @@
   <div class="col-8 mb-20">
 
 
-
+<center>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -44,12 +53,12 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-    
+</centre>
 
     </div>
       </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 down">
 
       <h5>{{product.name}}</h5>
      
@@ -65,25 +74,27 @@
      <div class="card-footer p-0 no-gutters">
 
             {% if product|is_in_cart:request.session.cart %}
+            
             <div class="row no-gutters">
               <form action="{% url 'product-details2' %}"class="col-2 " method="post">
                 {% csrf_token %}
                 <input hidden type="text" name='clickedproduct' value='{{product.id}}'>
                 <input hidden type="text" name='remove' value='True'>
-                <input type="submit" value=" - " class="btn btn-block btn-light border-right">
+                <input type="submit" value=" - " class="btn btn-block btn-warning border-right">
               </form>
               <div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
               <form action="{% url 'product-details2' %}" class="col-2 " method="post">
                 {% csrf_token %}
                 <input hidden type="text" name='clickedproduct' value='{{product.id}}'>
-                <input type="submit" value=" + " class="btn btn-block btn-light border-left">
+                <input type="submit" value=" + " class="btn btn-block btn-warning border-left">
               </form>
             </div>
             {% else %}
+            
             <form action="{% url 'product-details2' %}" method="POST" class="btn-block">
               {% csrf_token %}
               <input hidden type="text" name='clickedproduct' value='{{product.id}}'>
-              <input type="submit" class="float-right btn btn-light  form-control"
+              <input type="submit" class="float-right btn btn-danger  form-control"
                 value="Add To Cart">
             </form>
             {% endif %}

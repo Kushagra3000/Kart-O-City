@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load cart %}
+{% load custom_filter %}
+
+<style> 
+        .sidebox{ margin-top: 15px; }
+        
+        .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      .sizeOf{
+        font-size: 100px;
+        }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+</style>
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% comment %} <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@5.0.2/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> {% endcomment %}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesheet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"> {% endcomment %}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+
+
+<body class="profile-page">
+    <div class="page-header header-filter" data-parallax="true" style="background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');"></div>
+    <div class="main main-raised">
+		<div class="profile-content">
+            <div class="container">
+                <div class="row">
+	                <div class="col-md-6 ml-auto mr-auto">
+        	           <div class="profile">
+	                        {% comment %} <div class="avatar"> {% endcomment %}
+	                            <center>
+                                    <img src="https://i.pravatar.cc/300?u=a042581f4e29026604i" alt="Circle Image" class="rounded-circle">
+                                </centre>
+	                        {% comment %} </div> {% endcomment %}
+                            <center>
+                                <div class="name">
+                                    <h3 class="title"> Hello, Aman</h3>
+                                </div>
+                            </centre>
+	                    </div>
+    	            </div>
+                </div>
+                <div class="description text-center">
+                    <p> </p>
+                </div>
+				{% comment %} <div class="row">
+					<div class="col-md-6 ml-auto mr-auto">
+                        <div class="profile-tabs">
+                          <ul class="nav nav-pills nav-pills-icons justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
+                                  <i class="material-icons">face</i>
+                                  Manage Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                                  <i class="material-icons">lock</i>
+                                    Login and security
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                                  <i class="material-icons">shopping_cart</i>
+                                    Your Orders
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                                  <i class="material-icons">logout</i>
+                                    Logout
+                                </a>
+                            </li>
+                          </ul>
+                        </div>
+    	    	</div> {% endcomment %}
+            </div>
+            </div>
+        </div>
+	</div>
+
+
+    
+    <div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+        <div class="card-body">
+            <center>
+            <h5 class="card-title">Order history<ion-icon name="cart-outline"></ion-icon> </h5>
+            <p class="card-text">Check your orders history</p>
+            <a href="#" class="btn btn-primary">Order history</a>
+            </center>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+        <div class="card-body">
+            <center>
+            <h5 class="card-title">Bill payment history <ion-icon name="card-outline"></ion-icon> </h5>
+            <p class="card-text">Check your Bill payment history</p>
+            <a href="#" class="btn btn-primary">Payment history</a>
+            </center>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+        <div class="card-body">
+            <center>
+            <h5 class="card-title">Privacy and security <ion-icon name="finger-print-outline"></ion-icon></h5>
+            <p class="card-text">Update your security settings</p>
+            <a href="#" class="btn btn-primary">Privacy and security</a>
+            </center>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+        <div class="card-body">
+            <center>
+            <h5 class="card-title">Manage Profile <ion-icon name="accessibility-outline"></ion-icon> </h5>
+            <p class="card-text">update your profile</p>
+            <a href="#" class="btn btn-primary">Manage profile</a>
+            </center>
+        </div>
+        </div>
+    </div>
+    </div>
+    
+    <center> <button type="button" class="btn btn-outline-danger btn-lg sidebox">Log out</button>  </centre>
+    </div>
+</div>
+	<footer class="footer text-center ">
+        <p>Kart-O-City : The security and quality you deserve</p>
+    </footer>
+</body>
+
+
+
+{% endblock %}

@@ -6,6 +6,13 @@
 {% load custom_filter %}
 <!-- {% load search} -->
 <!-- body -->
+
+<style>
+body{
+    background-color: #33475c !important;
+}
+</style>
+
 <div class="container-fluid mt-3">
 	<div class="row">
 
@@ -14,9 +21,7 @@
 
 <!-- 		<div class="col-lg-3 mx-auto">
 			<div class="list-group">
-
 				<a href="/" class="list-group-item list-group-item-action">All Products</a>
-
 				{% for category in categories %}
 				<a href="/?category={{category.id}}"
 					class="list-group-item list-group-item-action">{{category.name}}</a>
@@ -44,7 +49,6 @@
 					</div>
 
 					<!-- <div class="card-footer p-0 no-gutters">
-
 						{% if product|is_in_cart:request.session.cart %}
 						<div class="row no-gutters">
 							<form action="/#{{product.id}}" class="col-2 " method="post">
@@ -68,7 +72,6 @@
 								value="Add To Cart">
 						</form>
 						{% endif %}
-
 					</div> -->
 
 				</div>

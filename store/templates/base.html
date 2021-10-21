@@ -7,8 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
+  {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> {% endcomment %}
+
+  <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesheet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+  </head>
 
   <title>Kartocity</title>
   <!-- <script src="https://js.stripe.com/v3/"></script> -->
@@ -23,8 +31,15 @@
   font-weight: 200;
   font-size: 30px;
 }
+.up{ margin-top: 8px; }
+.down{ margin-top: -3px; }
+.right{ margin-right: 6px; }
+.left{margin-left: 6px;}
+
   </style>
 </head>
+
+
 
 <body>
 
@@ -86,14 +101,16 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Kart-O-City</a>
+    <a class="navbar-brand mb-2" href="/">
+      <img src="https://i.ibb.co/QHXWKtv/Screenshot-2021-10-20-230640.png" width="200" height="60" alt="Screenshot-2021-10-20-230640" border="0">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="/"><button type="button" class="btn btn-outline-dark">Home</button></a>
         </li>
       
         <!-- <li class="nav-item dropdown">
@@ -111,7 +128,7 @@
 
 
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories
+          <button class="btn btn-outline-warning  dropdown-toggle up" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a href="/" class="list-group-item list-group-item-action">All Products</a>
@@ -126,26 +143,29 @@
  
 
       </ul>
-      <form class="navbar-collapse" method=POST action="{% url 'search-products' %}">
+      <form class="navbar-collapse left" method=POST action="{% url 'search-products' %}">
         {% csrf_token %}
-        <input class="form-control me-2" type="search" placeholder="Search Products" name="searched">
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
+        <input class="form-control me-2 " type="search" placeholder="Search Products" name="searched">
+        <button type="submit" class="btn btn-outline-success mb-2">Search</button>
       </form>
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item ">
-          <a class="nav-link" href="/cart">Cart 
-            <span class="badge badge-info">{{request.session.cart.keys|length}}</span>
-            <span class="sr-only">(current)</span></a>
+          
+          <a class="nav-link" href="/cart">
+            <button class="btn btn-info up">Cart <span class="badge badge-info">{{request.session.cart.keys|length}}</span>
+            <span class="sr-only">(current)</span></button>
+            </a>
         </li>
 
       {% if request.session.customer %}
         
         <li class="nav-item ">
-          <a class="nav-link" href="/orders">Orders<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/orders"><button type="button" class="btn btn-outline-primary up">Orders</button><span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+          {% comment %} <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a> {% endcomment %}
+          <a class="nav-link" href="/profile"><img src="https://i.pravatar.cc/40?u=a042581f4e29026604i" class="img-raised rounded-circle"></a>
         </li>
         {% else %}
        

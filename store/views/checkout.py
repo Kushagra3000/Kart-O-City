@@ -6,9 +6,7 @@ from django.views import View
 
 from store.models.product import Product
 from store.models.orders import Order
-
-import stripe
-stripe.api_key = "sk_test_51JmIDPSBqyUCoZseF730Qo1N6CQxGTbnXiGuZ8w8cKrRPWPfil82zcW2gRkhlKaDiaonYP0lfMpIyZMcjOqe4hMk00nltTe3sp"
+import razorpay
 
 
 class CheckOut(View):
@@ -19,6 +17,12 @@ class CheckOut(View):
         cart = request.session.get('cart')
         products = Product.get_products_by_id(list(cart.keys()))
         print(address, phone, customer, cart, products)
+        amount=5000
+        client = razorpay.Client(
+            auth=("rzp_test_NWZijDjIFaRFJk", "hqiJK5eJB3HAJpMl2ryPZXpc"))
+
+        payment = client.order.create({'amount': amount, 'currency': 'INR',
+                                       'payment_capture': '1'})
 
         for product in products:
             print(cart.get(str(product.id)))

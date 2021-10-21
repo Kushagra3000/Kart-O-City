@@ -109,7 +109,9 @@
             <center>
             <h5 class="card-title">Order history<ion-icon name="cart-outline"></ion-icon> </h5>
             <p class="card-text">Check your orders history</p>
-            <a href="#" class="btn btn-primary">Order history</a>
+            {% comment %} <a href="#" class="btn btn-primary">Order history</a> {% endcomment %}
+            {% comment %} class="nav-link" {% endcomment %}
+            <a href="/orders"><button type="button" class="btn btn-primary">Orders</button><span class="sr-only">(current)</span></a>
             </center>
         </div>
         </div>

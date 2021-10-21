@@ -33,4 +33,3 @@ def total_cart_price(products , cart):
         sum += price_total(p , cart)
 
     return sum
-    

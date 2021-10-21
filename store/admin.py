@@ -3,6 +3,7 @@ from .models.product import Product
 from .models.category import Category
 from .models.customer import Customer
 from .models.orders import Order
+from .models.seller import Seller
 
 
 class AdminProduct(admin.ModelAdmin):
@@ -19,3 +20,4 @@ admin.site.register(Product, AdminProduct)
 admin.site.register(Category , AdminCategory)
 admin.site.register(Customer )
 admin.site.register(Order )
+admin.site.register(Seller)

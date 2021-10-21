@@ -7,7 +7,9 @@ class Seller(models.Model):
     phone = models.CharField(max_length=15)
     email = models.EmailField()
     password = models.CharField(max_length=500)
-    
+    panCard = models.FileField(upload_to='uploads/', null=True)
+    gstDocument = models.FileField(upload_to='uploads/', null=True)
+    status = models.CharField(max_length=50,default="not verified")
     def register(self):
         self.save()
 
@@ -24,3 +26,8 @@ class Seller(models.Model):
             return True
 
         return  False
+
+    def handle_uploaded_file(f):  
+        with open('uploads/'+f.name, 'wb+') as destination:  
+            for chunk in f.chunks():  
+                destination.write(chunk)  

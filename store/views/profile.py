@@ -19,6 +19,12 @@ from store.models.product import Product
 from store.models.category import Category
 from django.views import View
 
+from django.contrib.auth import logout as logouts
+
 
 def Profile(request):
     return render(request, 'profile.html', {})
+
+def logout(request):
+    logouts(request)
+    return redirect('login')

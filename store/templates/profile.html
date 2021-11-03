@@ -150,8 +150,10 @@
         </div>
     </div>
     </div>
-    
-    <center> <button type="button" class="btn btn-outline-danger btn-lg sidebox">Log out</button>  </centre>
+    <form action="{%url 'logout' %}" method="POST">
+        {%csrf_token%}
+    <center> <button type="submit" value="Logout" class="btn btn-outline-danger btn-lg sidebox">Log out</button>  </centre>
+    </form>
     </div>
 </div>
 	<footer class="footer text-center ">

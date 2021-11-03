@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 from .views.home import Index , store
 from .views.signup import Signup
-from .views.login import Login , logout 
+from .views.login import Login
 from .views.cart import Cart
 from .views.sellerLogin import SellerLogin
 from .views.sellerSignUp import SellerSignUp
@@ -27,7 +27,6 @@ urlpatterns = [
     path('sellerLogin', SellerLogin.as_view() , name='sellerLogin'),
     path('sellerSignUp', SellerSignUp.as_view() , name='sellerSignUp'),
     path('sellerHomepage', SellerHomepage.as_view() , name='sellerHomepage'),
-    path('logout', logout , name='logout'),
     path('cart', auth_middleware(Cart.as_view()) , name='cart'),
     path('checkout', CheckOut.as_view() , name='checkout'),
     path('orders', auth_middleware(OrderView.as_view()), name='orders'),
@@ -36,4 +35,5 @@ urlpatterns = [
     path('productdetail', productdetail.product_details2, name='product-details2'),
     path('payment', payment.charge, name='pay-charge'),
     path('profile', profile.Profile, name='profile'),
+    path('logout/',profile.logout,name='logout')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

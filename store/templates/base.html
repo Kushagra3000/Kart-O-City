@@ -154,6 +154,11 @@
           {% comment %} <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a> {% endcomment %}
           <a class="nav-link" href="/profile"><img src="https://i.pravatar.cc/40?u=a042581f4e29026604i" class="img-raised rounded-circle"></a>
         </li>
+        {% elif request.session.seller %}
+        <li class="nav-item ">
+          {% comment %} <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a> {% endcomment %}
+          <a class="nav-link" href="/profile"><img src="https://i.pravatar.cc/40?u=a042581f4e29026604i" class="img-raised rounded-circle"></a>
+        </li>
         {% else %}
        
         <li class="nav-item ">

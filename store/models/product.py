@@ -11,6 +11,8 @@ class Product(models.Model):
     image2 = models.ImageField(upload_to='uploads/products/')
     image3 = models.ImageField(upload_to='uploads/products/')
 
+    def register(self):
+        self.save()
 
     @staticmethod
     def get_products_by_id(ids):
@@ -29,3 +31,5 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+        
+    

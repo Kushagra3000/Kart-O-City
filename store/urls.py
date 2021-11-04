@@ -15,6 +15,7 @@ from .views import productdetails
 from .views import productdetail
 from .views import payment
 from .views import profile
+from .views.addProduct import AddProduct
 from django.conf.urls.static import static
 from kartocity import settings
 
@@ -35,5 +36,6 @@ urlpatterns = [
     path('productdetail', productdetail.product_details2, name='product-details2'),
     path('payment', payment.charge, name='pay-charge'),
     path('profile', profile.Profile, name='profile'),
-    path('logout/',profile.logout,name='logout')
+    path('logout/',profile.logout,name='logout'),
+    path('addProduct',AddProduct.as_view(),name='addProduct')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

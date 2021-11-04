@@ -2,7 +2,6 @@ from django.shortcuts import render , redirect, HttpResponseRedirect,HttpRespons
 from django.contrib.auth.hashers import  check_password
 from store.models.seller import Seller
 from django.views import  View
-from store.templates.AddProductForm import AddProductForm
 
 class SellerLogin(View):
     return_url = None
@@ -24,10 +23,8 @@ class SellerLogin(View):
                 else:
                     Seller.return_url = None
                     print(seller.status == "verified")
-                    context = {}
-                    context['form'] = AddProductForm
                     if(seller.status == "verified"):
-                        return render(request,'AddProduct.html',context)
+                        return redirect('addProduct')
                     elif(seller.panCard!=None and seller.gstDocument!=None):
                         return HttpResponse("Your Status is not verified")
                     else:

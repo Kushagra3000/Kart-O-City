@@ -11,7 +11,7 @@ class SellerHomepage(View):
     def get(self,request):
         context = {}
         context['form'] = SellerForm
-        return render(request,'sellerHomepage.html',context)
+        return render(request,'sellerHomePage.html',context)
     def post(self,request):
         email = request.POST.get('email')
         sel = Seller.get_seller_by_email(email)
@@ -25,4 +25,4 @@ class SellerHomepage(View):
         else:
             context = {}
             context['form'] = SellerForm
-            return render(request,'sellerHomepage.html',context)
+            return render(request,'sellerHomePage.html',context)

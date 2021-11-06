@@ -41,6 +41,11 @@
 
 
 <body class="profile-page">
+    {% if confirm_msg%}
+    <div class="alert alert-success" role="alert">
+      {{confirm_msg}}
+    </div>
+    {% endif %}
     <div class="page-header header-filter" data-parallax="true" style="background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');"></div>
     <div class="main main-raised">
 		<div class="profile-content">
@@ -55,7 +60,7 @@
 	                        {% comment %} </div> {% endcomment %}
                             <center>
                                 <div class="name">
-                                    <h3 class="title"> Hello, Aman</h3>
+                                    <h3 class="title"> Hello, {{first_name}}</h3>
                                 </div>
                             </centre>
 	                    </div>
@@ -133,7 +138,7 @@
             <center>
             <h5 class="card-title">Privacy and security <ion-icon name="finger-print-outline"></ion-icon></h5>
             <p class="card-text">Update your security settings</p>
-            <a href="#" class="btn btn-primary">Privacy and security</a>
+            <a href="/changepassword" class="btn btn-primary">Privacy and security</a>
             </center>
         </div>
         </div>
@@ -144,7 +149,7 @@
             <center>
             <h5 class="card-title">Manage Profile <ion-icon name="accessibility-outline"></ion-icon> </h5>
             <p class="card-text">update your profile</p>
-            <a href="#" class="btn btn-primary">Manage profile</a>
+            <a href="/manageprofile" class="btn btn-primary">Manage profile</a>
             </center>
         </div>
         </div>

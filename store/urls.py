@@ -15,6 +15,8 @@ from .views import productdetails
 from .views import productdetail
 from .views import payment
 from .views import profile
+from .views import otp
+from .views import otpsignup
 from .views.addProduct import AddProduct
 from django.conf.urls.static import static
 from kartocity import settings
@@ -37,5 +39,12 @@ urlpatterns = [
     path('payment', payment.charge, name='pay-charge'),
     path('profile', profile.Profile, name='profile'),
     path('logout/',profile.logout,name='logout'),
-    path('addProduct',AddProduct.as_view(),name='addProduct')
+    path('editprofile', profile.editprofile, name='editprofile'),
+    path('manageprofile',profile.manageprofile,name='manageprofile'),
+    path('addProduct',AddProduct.as_view(),name='addProduct'),
+    path('otp/',otp.checkotp,name='otp'),
+    path('otpsignup/',otpsignup.checkotp,name='otpsignup'),
+    path('changepassword',profile.newpass,name='changepassword'),
+    path('passwordchange',profile.changepass,name='passwordchange')
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

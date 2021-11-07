@@ -85,5 +85,5 @@ class SellerLogin(View):
                 error_message = 'Email or Password invalid !!'
         else:
             error_message = 'Email or Password invalid !!'
-        return render(request, 'sellerLogin.html', {'error': error_message,"form":form})
+        return render(request, 'sellerLogin.html', {"form":form,'error': error_message})
 

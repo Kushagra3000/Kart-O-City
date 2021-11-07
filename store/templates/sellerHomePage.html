@@ -3,11 +3,11 @@
 
 {% block content %}
 
-<div>
+<div class="col-lg-4 mt-4 border mb-4 mx-auto rounded pt-4" >
     <form method="POST" enctype="multipart/form-data">
         {%csrf_token%}
         {{ form.as_p }}   
-        <button type="submit" class="save btn btn-deafault">Save</button>
+        <button type="submit" class="btn btn-sm btn-info col-lg-8">upload</button>
     </form>
 </div>
 {% endblock %}

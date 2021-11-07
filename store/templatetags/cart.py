@@ -28,8 +28,17 @@ def price_total(product  , cart):
 
 @register.filter(name='total_cart_price')
 def total_cart_price(products , cart):
-    sum = 0 ;
+    sum = 0;
     for p in products:
         sum += price_total(p , cart)
 
     return sum
+
+
+@register.filter(name='total_cart_price2')
+def total_cart_price2(products , cart):
+    sum = 0;
+    for p in products:
+        sum += price_total(p , cart)
+
+    return sum*100

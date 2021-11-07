@@ -27,6 +27,9 @@ class Seller(models.Model):
 
         return  False
 
+    def get_customer_by_id(ids):
+        return Seller.objects.get(id__in =ids)
+
     def handle_uploaded_file(f):  
         with open('uploads/'+f.name, 'wb+') as destination:  
             for chunk in f.chunks():  

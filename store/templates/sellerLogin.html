@@ -43,6 +43,8 @@
                 </div>
 
                 <hr>
+                {% csrf_token %}
+                {{form.captcha}}
                 <div class="form-group">
                     <input class="btn btn-sm btn-info col-lg-8" type="submit" value="Seller Login">
                 </div>

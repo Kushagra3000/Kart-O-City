@@ -35,6 +35,10 @@ def logout(request):
     logouts(request)
     return redirect('login')
 
+def sellerlogout(request):
+    logouts(request)
+    return redirect('login')
+
 def manageprofile(request):
 	lst = []
 	lst.append(request.session.get('customer'))

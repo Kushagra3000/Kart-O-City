@@ -11,6 +11,7 @@ import os
 from twilio.rest import Client
 import smtplib, ssl
 from email.mime.text import MIMEText
+from store.templates.captcha import MyForm
 
 class generateKey:
     @staticmethod
@@ -53,6 +54,8 @@ class sendOTP:
 class Login(View):
     return_url = None
     def get(self , request):
+        # context = {}
+        # context['form'] = MyForm
         Login.return_url = request.GET.get('return_url')
         return render(request , 'login.html')
 
@@ -60,11 +63,11 @@ class Login(View):
         email = request.POST.get('email')
         password = request.POST.get('password')
         customer = Customer.get_customer_by_email(email)
+        # form = MyForm(request.POST)
         error_message = None
         if customer:
-
             flag = check_password(password, customer.password)
-            if flag:
+            if flag :
                 phone = customer.phone
                 keygen = generateKey()
                 key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
@@ -72,13 +75,14 @@ class Login(View):
                 print("otp ",OTP.now())
                 otpobj = sendOTP()
                 otpobj.otpsend(email,phone,OTP.now())
-
                 return render(request, 'otp.html', {'email':email})
+
             else:
                 error_message = 'Email or Password invalid !!'
         else:
             error_message = 'Email or Password invalid !!'
 
         print(email, password)
-
+        # context = {}
+        # context['form'] = MyForm
         return render(request, 'login.html', {'error': error_message})

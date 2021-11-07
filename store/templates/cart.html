@@ -75,23 +75,22 @@
                   <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId">
                   
                 </div>
-                <div class="form-group">
-                    <label for="">Phone</label>
-                    <input type="text" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId">
-                  </div>
-
+                
+                    <input hidden type="number" name="total_price" value={{products|total_cart_price:request.session.cart}} id="" class="form-control" placeholder="" aria-describedby="helpId">
+                  
 
                   <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_NWZijDjIFaRFJk"
-                      data-amount="5000"
+                      data-amount={{products|total_cart_price2:request.session.cart}}
                       data-currency="INR"
                       data-order_id="{{payment.id}}"
                       data-buttontext="Pay with Razorpay"
-                      data-name="Professional Cipher"
-                      data-description="Django and Data Science"
-                      data-image="https://example.com/your_logo.jpg"
-                      data-prefill.name="PC"
-                      data-prefill.email="pc@studygyaan.com"
-                      data-theme.color="#F37254">
+                      data-name={{first_name}}
+                      data-send_sms_hash= "true"
+                      data-image="https://i.ibb.co/QHXWKtv/Screenshot-2021-10-20-230640.png"
+                      data-prefill.name={{first_name}}
+                      data-prefill.email={{email}}
+                      data-prefill.contact = {{phone}}
+                      data-theme.color="#1589FF">
                         
                       </script>
 

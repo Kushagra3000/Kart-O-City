@@ -13,8 +13,9 @@ class SellerHomepage(View):
         context['form'] = SellerForm
         return render(request,'sellerHomePage.html',context)
     def post(self,request):
-        email = request.POST.get('email')
-        sel = Seller.get_seller_by_email(email)
+        lst = []
+        lst.append(request.session.get('seller'))
+        sel = Seller.get_customer_by_id(lst)
         pan = SellerForm(request.POST,request.FILES)
         gst = SellerForm(request.POST,request.FILES)
         if pan.is_valid() and gst.is_valid():

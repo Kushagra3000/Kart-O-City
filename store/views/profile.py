@@ -17,6 +17,45 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 
 
+class generateKey:
+    @staticmethod
+    def returnValue(phone):
+        return str(phone) + str(datetime.date(datetime.now())) + "Some Random Secret Key"
+
+class sendOTP:
+    @staticmethod
+    def otpsend(email,phone,otp):
+        # account_sid = 'AC40ef4acb7313454341fb58903c072b00'
+        # auth_token = '2b07567ca59e4e0b61c1524a06f89068'
+        # 
+        # 
+        # client = Client(account_sid, auth_token)
+        # print('phone number ',phone)
+        # message = client.messages.create(
+        #                               body=f'OTP for login-{otp}',
+        #                               from_='+13187319719',
+        #                               to='+919773709020'
+        #                           )
+
+
+
+        port = 465  # For SSL
+        password = "{k@RT-02c!2y}"
+        sender_email = "kartocity.pvt.ltd@gmail.com"
+        receiver_email = email
+        message = MIMEText("Hi there,\n\n"+otp+" is your Kart-O-City login OTP")
+        message['Subject'] = 'Kart-O-City Login OTP'
+        message['From'] = 'kartocity.pvt.ltd@gmail.com'
+        message['To'] = email
+
+        server = smtplib.SMTP_SSL("smtp.gmail.com", port)
+        server.login(sender_email, password)
+        server.sendmail(sender_email, [receiver_email], message.as_string())
+        server.quit()
+
+
+
+
 def Profile(request):
 	lst = []
 	lst.append(request.session.get('customer'))
@@ -76,20 +115,29 @@ def editprofile(request):
 		error_message = validateCustomer(cust)
 		print("error: ", error_message)
 		if not error_message:
-			customer.first_name = first_name
-			customer.last_name = last_name
-			customer.phone = phone
-			customer.email = email
-			customer.register()
-			confirm_msg = "Profile Updated Succefully!"
+
+			keygen = generateKey()
+			key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
+			OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model for OTP is created
+			print("otp ",OTP.now())
+			otpobj = sendOTP()
+			otpobj.otpsend(email,phone,OTP.now())
+
+
+			# customer.first_name = first_name
+			# customer.last_name = last_name
+			# customer.phone = phone
+			# customer.email = email
+			# customer.register()
+			# confirm_msg = "Profile Updated Succefully!"
 			values = {
-			    'first_name': customer.first_name,
-			    'last_name': customer.last_name,
-			    'phone': customer.phone,
-			    'email': customer.email,
-			    'confirm_msg': confirm_msg
+			    'first_name': first_name,
+			    'last_name': last_name,
+			    'phone': phone,
+			    'email': email,
+			    'emailold':customer.email,
 			}
-			return render(request, 'profile.html', values)
+			return render(request, 'otpmanageprof.html', values)
 		else:
 			values = {
 			    'first_name': customer.first_name,

@@ -65,7 +65,7 @@ class Login(View):
         form1 = MyForm(request.POST)
         form = MyForm
         error_message = None
-        if customer and form.is_valid():
+        if customer and form1.is_valid():
             flag = check_password(password, customer.password)
             if flag :
                 phone = customer.phone

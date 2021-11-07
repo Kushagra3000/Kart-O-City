@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<form action="{% url 'checkotpmanageprofile' %}" method="post">
+                
+                {% csrf_token %}
+
+               	<div class="form-group">
+               	  <label for="">OTP</label>
+               	  <input type="text" name="otp" id="" class="form-control" placeholder="" aria-describedby="helpId">
+               	  
+               	</div>
+                <input hidden="" type="email" name='email' value='{{email}}'>
+                <input hidden="" type="email" name='emailold' value='{{emailold}}'>
+                <input hidden="" type="text" name='first_name' value='{{first_name}}'>
+                <input hidden="" type="text" name='last_name' value='{{last_name}}'>
+               	<input hidden="" type="text" name='phone' value='{{phone}}'>
+                
+                <div class="form-group">
+                    <input class="btn btn-sm btn-info col-lg-8" type="submit" value="OTP">
+                </div>
+                
+            </form>
+
+
+{% endblock %}

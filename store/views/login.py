@@ -54,18 +54,18 @@ class sendOTP:
 class Login(View):
     return_url = None
     def get(self , request):
-        # context = {}
-        # context['form'] = MyForm
+        form = MyForm
         Login.return_url = request.GET.get('return_url')
-        return render(request , 'login.html')
+        return render(request , 'login.html',{"form":form})
 
     def post(self , request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         customer = Customer.get_customer_by_email(email)
-        # form = MyForm(request.POST)
+        form1 = MyForm(request.POST)
+        form = MyForm
         error_message = None
-        if customer:
+        if customer and form.is_valid():
             flag = check_password(password, customer.password)
             if flag :
                 phone = customer.phone
@@ -83,6 +83,4 @@ class Login(View):
             error_message = 'Email or Password invalid !!'
 
         print(email, password)
-        # context = {}
-        # context['form'] = MyForm
-        return render(request, 'login.html', {'error': error_message})
+        return render(request, 'login.html', {'error': error_message,"form":form})

@@ -7,19 +7,19 @@ from store.templates.captcha import MyForm
 class SellerLogin(View):
     return_url = None
     def get(self , request):
-        # context = {}
-        # context['form'] = MyForm
+        form = MyForm
         Seller.return_url = request.GET.get('return_url')
-        return render(request , 'sellerLogin.html')
+        return render(request , 'sellerLogin.html',{"form":form})
 
     def post(self , request):
         email = request.POST.get('email')
         password = request.POST.get('password')
-        # form = MyForm(request.POST)
+        form1 = MyForm(request.POST)
         seller = Seller.get_seller_by_email(email)
+        form = MyForm
         print(seller) #admasmoad
         error_message = None
-        if seller:
+        if seller and form1.is_valid():
             flag = check_password(password, seller.password)
             if flag:
                 request.session['seller'] = seller.id
@@ -41,5 +41,5 @@ class SellerLogin(View):
                 error_message = 'Email or Password invalid !!'
         else:
             error_message = 'Email or Password invalid !!'
-        return render(request, 'sellerLogin.html', {'error': error_message})
+        return render(request, 'sellerLogin.html', {'error': error_message,"form":form})
 

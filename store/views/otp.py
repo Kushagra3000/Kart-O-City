@@ -136,7 +136,7 @@ def checkotpsellerlogin(request):
             if(seller.status == "verified"):
                 return redirect('addProduct')
             elif(seller.panCard!='' and seller.gstDocument!=''):
-                return HttpResponse("Your Status is not verified")
+                return render(request,'Status.html')
             else:
                 return redirect('sellerHomepage')
     else:

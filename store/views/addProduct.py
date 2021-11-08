@@ -16,4 +16,4 @@ class AddProduct(View):
         form = AddProductForm(request.POST,request.FILES)
         if(form.is_valid()):
             form.save()
-            return HttpResponse("File uploaded successfully")
+            return render(request,'ProductAdded.html')

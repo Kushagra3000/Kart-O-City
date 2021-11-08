@@ -22,7 +22,7 @@ class SellerHomepage(View):
             sel.panCard=request.FILES['pancard']
             sel.gstDocument=request.FILES['gstDocument']
             sel.save()
-            return HttpResponse("File uploaded successfully")
+            return render(request,'VerficationAdded.html')
         else:
             context = {}
             context['form'] = SellerForm

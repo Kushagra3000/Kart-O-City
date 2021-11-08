@@ -1,7 +1,11 @@
 from django.shortcuts import render , redirect , HttpResponseRedirect
 from django.contrib.auth.hashers import  check_password
 from store.models.customer import Customer
+from store.models.product import Product
 from store.models.seller import Seller
+from store.models.orders import Order
+from store.templates.captcha import MyForm
+import razorpay
 from django.views import  View
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
@@ -40,8 +44,8 @@ def checkotp(request):
             Customer.return_url = None
             return redirect('homepage')
     else:
-    	error_message = 'incorrect otp'
-    	return render(request, 'login.html', {'error': error_message})
+    	error_message = 'Incorrect otp'
+    	return render(request, 'login.html', {'error': error_message,'form':MyForm})
 
 
 def checkotpmanageprofile(request):
@@ -104,11 +108,10 @@ def checkotpsellersignup(request):
         return redirect('homepage')
     else:
         error_message = 'incorrect otp'
-        return render(request, 'sellerSignUp.html', {'error': error_message})
+        return render(request, 'sellerSignUp.html', {'error': error_message,'form':MyForm})
 
 
 def checkotpsellerlogin(request):
-
 
     email = request.POST.get('email')
     otp = request.POST.get('otp')
@@ -137,5 +140,124 @@ def checkotpsellerlogin(request):
             else:
                 return redirect('sellerHomepage')
     else:
-        error_message = 'incorrect otp'
-        return render(request, 'sellerLogin.html', {'error': error_message})
+        error_message = 'Incorrect otp'
+        return render(request, 'sellerLogin.html', {'error': error_message,'form':MyForm})
+
+
+def otpcheckout(request):
+    address = request.POST.get('address')
+    lst = []
+    lst.append(request.session.get('customer'))
+    customer = Customer.get_customer_by_id(lst)
+    email = customer.email
+    phone = customer.phone
+    cart = request.session.get('cart')
+    products = Product.get_products_by_id(list(cart.keys()))
+    amount=request.POST.get('total_price')
+    first_name = customer.first_name
+    phone = customer.phone
+    
+
+    
+    keygen = generateKey()
+    key = base64.b32encode(keygen.returnValue(phone).encode()) 
+    OTP = pyotp.TOTP(key,interval = 120) 
+    otp = request.POST.get('otp')
+    amount = int(amount)*100
+    print('amount',amount,type(amount))
+    ids = list(request.session.get('cart').keys())
+    products = Product.get_products_by_id(ids)
+    if OTP.verify(otp): 
+        checkoutotp = True
+        values = {'address':address,
+                    'email':email,
+                    'total_price':amount,
+                    'first_name':first_name,
+                    'phone':phone,
+                    'checkoutotp':checkoutotp
+                    }
+        return render(request, 'otpcheckout.html', values)
+    else:
+        error_message = "Incorrect OTP"
+        values = {'address':address,
+                    'email':email,
+                    'total_price':amount,
+                    'first_name':first_name,
+                    'phone':phone,
+                    'error_message':error_message,
+                    'products':products
+                    }
+        return render(request, 'cart.html', values)
+
+ 
+
+def otpcheckout2(request):
+    address = request.POST.get('address')
+    lst = []
+    lst.append(request.session.get('customer'))
+    customer = Customer.get_customer_by_id(lst)
+    email = customer.email
+    phone = customer.phone
+    cart = request.session.get('cart')
+    products = Product.get_products_by_id(list(cart.keys()))
+    amount=request.POST.get('total_price')
+    client = razorpay.Client(auth=("rzp_test_NWZijDjIFaRFJk", "hqiJK5eJB3HAJpMl2ryPZXpc"))
+    first_name = customer.first_name
+    phone = customer.phone
+    checkoutotp = False
+  
+    values = {'address':address,
+                'email':email,
+                'total_price':amount,
+                'first_name':first_name,
+                'phone':phone,
+                'checkoutotp':checkoutotp
+                }
+    amount = int(amount)
+    payment = client.order.create({'amount': amount, 'currency': 'INR'})
+    print("payment",payment)
+    for product in products:
+        print(cart.get(str(product.id)))
+        order = Order(customer=Customer(id=lst[0]),
+                      product=product,
+                      price=product.price,
+                      address=address,
+                      phone=phone,
+                      quantity=cart.get(str(product.id)))
+        order.save()
+    
+    request.session['cart'] = {}
+
+    confirm_msg = "Your order has been placed."
+    return render(request, 'cart.html', {'confirm_msg':confirm_msg})
+
+
+def checkotpforgotcustomer(request):
+    email = request.POST.get('email')
+    otp = request.POST.get('otp')
+    customer = Customer.get_customer_by_email(email)
+    phone = customer.phone
+    keygen = generateKey()
+    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
+    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
+    print("Idhar otp: ",OTP.now())
+    if OTP.verify(otp):
+        return render(request, 'newpasswordcustomer.html', {'email':email}) 
+    else:
+        error_message = "Incorrect OTP"
+        return render(request, 'forgotcustomer.html', {'error_message':error_message}) 
+
+def checkotpforgotseller(request):
+    email = request.POST.get('email')
+    otp = request.POST.get('otp')
+    customer = Seller.get_seller_by_email(email)
+    phone = customer.phone
+    keygen = generateKey()
+    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
+    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
+    print("Idhar otp: ",OTP.now())
+    if OTP.verify(otp):
+        return render(request, 'newpasswordseller.html', {'email':email}) 
+    else:
+        error_message = "Incorrect OTP"
+        return render(request, 'forgotseller.html', {'error_message':error_message}) 

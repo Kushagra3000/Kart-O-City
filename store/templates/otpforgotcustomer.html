@@ -15,7 +15,7 @@
             <div class="panel panel-default">
               
                <div class="panel-body">
-                    <form action="{% url 'otp' %}" method="post">
+                    <form action="{% url 'checkotpforgotcustomer' %}" method="post">
                         {% csrf_token %}
                         <center><h2>OTP</h2></center>
                         <input  type="text" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email}}" />

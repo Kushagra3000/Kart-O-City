@@ -1,5 +1,4 @@
 from django.shortcuts import render , redirect , HttpResponseRedirect
-
 from django.contrib.auth.hashers import  check_password
 from store.models.customer import Customer
 from django.views import  View
@@ -12,6 +11,7 @@ from twilio.rest import Client
 import smtplib, ssl
 from email.mime.text import MIMEText
 from store.templates.captcha import MyForm
+from kartocity.settings import EMAIL_PASSWORD
 
 class generateKey:
     @staticmethod
@@ -21,22 +21,8 @@ class generateKey:
 class sendOTP:
     @staticmethod
     def otpsend(email,phone,otp):
-        # account_sid = 'AC40ef4acb7313454341fb58903c072b00'
-        # auth_token = '2b07567ca59e4e0b61c1524a06f89068'
-        # 
-        # 
-        # client = Client(account_sid, auth_token)
-        # print('phone number ',phone)
-        # message = client.messages.create(
-        #                               body=f'OTP for login-{otp}',
-        #                               from_='+13187319719',
-        #                               to='+919773709020'
-        #                           )
-
-
-
-        port = 465  # For SSL
-        password = "{k@RT-02c!2y}"
+        port = 465 
+        password = EMAIL_PASSWORD
         sender_email = "kartocity.pvt.ltd@gmail.com"
         receiver_email = email
         message = MIMEText("Hi there,\n\n"+otp+" is your Kart-O-City login OTP")
@@ -65,7 +51,9 @@ class Login(View):
         form1 = MyForm(request.POST)
         form = MyForm
         error_message = None
-        if customer and form1.is_valid():
+        if not customer:
+            error_message = 'Email or Password invalid !!'
+        elif form1.is_valid():
             flag = check_password(password, customer.password)
             if flag :
                 phone = customer.phone
@@ -80,7 +68,6 @@ class Login(View):
             else:
                 error_message = 'Email or Password invalid !!'
         else:
-            error_message = 'Email or Password invalid !!'
+            error_message = 'Captcha Did Not Match!!'
 
-        print(email, password)
         return render(request, 'login.html', {'error': error_message,"form":form})

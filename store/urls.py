@@ -17,6 +17,7 @@ from .views import payment
 from .views import profile
 from .views import otp
 from .views import otpsignup
+from .views import forgotpassword
 from .views.addProduct import AddProduct
 from django.conf.urls.static import static
 from kartocity import settings
@@ -45,10 +46,20 @@ urlpatterns = [
     path('addProduct',AddProduct.as_view(),name='addProduct'),
     path('otp/',otp.checkotp,name='otp'),
     path('checkotpsellersignup',otp.checkotpsellersignup,name='checkotpsellersignup'),
+    path('otpcheckout',otp.otpcheckout,name='otpcheckout'),
+    path('otpcheckout2',otp.otpcheckout2,name='otpcheckout2'),
+    path('otpsellerlogin',otp.checkotpsellerlogin,name='otpsellerlogin'),
+    path('checkotpforgotcustomer',otp.checkotpforgotcustomer,name='checkotpforgotcustomer'),
+    path('checkotpforgotseller',otp.checkotpforgotseller,name='checkotpforgotseller'),
     path('otpsellerlogin',otp.checkotpsellerlogin,name='otpsellerlogin'),
     path('checkotpmanageprofile',otp.checkotpmanageprofile,name='checkotpmanageprofile'),
     path('otpsignup/',otpsignup.checkotp,name='otpsignup'),
     path('changepassword',profile.newpass,name='changepassword'),
-    path('passwordchange',profile.changepass,name='passwordchange')
-
+    path('passwordchange',profile.changepass,name='passwordchange'),
+    path('forgotcustomer',forgotpassword.forgotcustomer,name='forgotcustomer'),
+    path('forgotseller',forgotpassword.forgotseller,name='forgotseller'),
+    path('newpasswordcustomer',forgotpassword.newpasswordcustomer,name='newpasswordcustomer'),
+    path('newpasswordseller',forgotpassword.newpasswordseller,name='newpasswordseller'),
+    path('sendotpforgotcustomer',forgotpassword.sendotpforgotcustomer,name='sendotpforgotcustomer'),
+    path('sendotpforgotseller',forgotpassword.sendotpforgotseller,name='sendotpforgotseller')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

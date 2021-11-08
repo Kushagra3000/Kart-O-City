@@ -65,9 +65,11 @@ class SellerLogin(View):
         form1 = MyForm(request.POST)
         seller = Seller.get_seller_by_email(email)
         form = MyForm
-        print(seller) #admasmoad
+        Seller.return_url = request.GET.get('return_url')
         error_message = None
-        if seller and form1.is_valid():
+        if not seller:
+            error_message = 'Email or Password invalid !!'
+        elif form1.is_valid():
             flag = check_password(password, seller.password)
             if flag:
 
@@ -77,13 +79,13 @@ class SellerLogin(View):
                 OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model for OTP is created
                 print("otp ",OTP.now())
                 otpobj = sendOTP()
+
                 otpobj.otpsend(email,phone,OTP.now())
 
                 return render(request, 'otpsellerlogin.html', {'email':email,'return_url':Seller.return_url})
-
             else:
                 error_message = 'Email or Password invalid !!'
         else:
-            error_message = 'Email or Password invalid !!'
+            error_message = 'Captcha Did Not Match'
         return render(request, 'sellerLogin.html', {"form":form,'error': error_message})
 

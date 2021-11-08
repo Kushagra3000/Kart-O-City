@@ -4,7 +4,6 @@ from store.models.category import Category
 from django.views import View
 
 
-# Create your views here.
 class Index(View):
 
     def post(self , request):
@@ -36,7 +35,6 @@ class Index(View):
 
 
     def get(self , request):
-        # print()
         return HttpResponseRedirect(f'/store{request.get_full_path()[1:]}')
 
 def store(request):

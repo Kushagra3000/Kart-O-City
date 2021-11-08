@@ -23,6 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^_g%33qd(g8bjc+*40&uh(ptgkb$&-*+0!i3$lu7xj1u166cbb'
 
 EMAIL_PASSWORD = "{k@RT-02c!2y}"
+EMAIL_ADDR = "kartocity.pvt.ltd@gmail.com"
+
+EXPIRY_TIME = 120
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

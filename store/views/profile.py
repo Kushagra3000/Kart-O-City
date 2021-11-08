@@ -12,10 +12,11 @@ from django.core.exceptions import ObjectDoesNotExist
 import pyotp
 import base64
 import os
-from twilio.rest import Client
 import smtplib, ssl
 from email.mime.text import MIMEText
-
+from kartocity.settings import EMAIL_PASSWORD
+from kartocity.settings import EXPIRY_TIME
+from kartocity.settings import EMAIL_ADDR
 
 class generateKey:
     @staticmethod
@@ -25,27 +26,14 @@ class generateKey:
 class sendOTP:
     @staticmethod
     def otpsend(email,phone,otp):
-        # account_sid = 'AC40ef4acb7313454341fb58903c072b00'
-        # auth_token = '2b07567ca59e4e0b61c1524a06f89068'
-        # 
-        # 
-        # client = Client(account_sid, auth_token)
-        # print('phone number ',phone)
-        # message = client.messages.create(
-        #                               body=f'OTP for login-{otp}',
-        #                               from_='+13187319719',
-        #                               to='+919773709020'
-        #                           )
-
-
-
-        port = 465  # For SSL
-        password = "{k@RT-02c!2y}"
-        sender_email = "kartocity.pvt.ltd@gmail.com"
+      
+        port = 465 
+        password = EMAIL_PASSWORD
+        sender_email = EMAIL_ADDR
         receiver_email = email
         message = MIMEText("Hi there,\n\n"+otp+" is your Kart-O-City login OTP")
         message['Subject'] = 'Kart-O-City Login OTP'
-        message['From'] = 'kartocity.pvt.ltd@gmail.com'
+        message['From'] = EMAIL_ADDR
         message['To'] = email
 
         server = smtplib.SMTP_SSL("smtp.gmail.com", port)
@@ -92,7 +80,6 @@ def manageprofile(request):
 	return render(request,'manageprofile.html',values)
 
 def editprofile(request):
-	print("hello hello")
 	first_name = request.POST.get('first_name')
 	last_name = request.POST.get('last_name')
 	email = request.POST.get('email')
@@ -118,18 +105,11 @@ def editprofile(request):
 
 			keygen = generateKey()
 			key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
-			OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model for OTP is created
+			OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model for OTP is created
 			print("otp ",OTP.now())
 			otpobj = sendOTP()
 			otpobj.otpsend(email,phone,OTP.now())
 
-
-			# customer.first_name = first_name
-			# customer.last_name = last_name
-			# customer.phone = phone
-			# customer.email = email
-			# customer.register()
-			# confirm_msg = "Profile Updated Succefully!"
 			values = {
 			    'first_name': first_name,
 			    'last_name': last_name,
@@ -161,8 +141,6 @@ def editprofile(request):
 		return render(request, 'manageprofile.html', values)
 
 
-
-
 def newpass(request):
 	return render(request,'changepassword.html',{})
 
@@ -173,7 +151,6 @@ def changepass(request):
 	currentpassword = request.POST.get('currentpassword')
 	newpassword = request.POST.get('newpassword')
 	confirmpassword = request.POST.get('confirmpassword')
-
 	flag = check_password(currentpassword, customer.password)
 
 	if flag:

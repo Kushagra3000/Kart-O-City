@@ -12,7 +12,9 @@ from twilio.rest import Client
 import smtplib, ssl
 from email.mime.text import MIMEText
 from store.templates.captcha import MyForm
-
+from kartocity.settings import EMAIL_PASSWORD
+from kartocity.settings import EXPIRY_TIME
+from kartocity.settings import EMAIL_ADDR
 
 class generateKey:
     @staticmethod
@@ -22,27 +24,14 @@ class generateKey:
 class sendOTP:
     @staticmethod
     def otpsend(email,phone,otp):
-        # account_sid = 'AC40ef4acb7313454341fb58903c072b00'
-        # auth_token = '2b07567ca59e4e0b61c1524a06f89068'
-        # 
-        # 
-        # client = Client(account_sid, auth_token)
-        # print('phone number ',phone)
-        # message = client.messages.create(
-        #                               body=f'OTP for login-{otp}',
-        #                               from_='+13187319719',
-        #                               to='+919773709020'
-        #                           )
-
-
-
-        port = 465  # For SSL
-        password = "{k@RT-02c!2y}"
-        sender_email = "kartocity.pvt.ltd@gmail.com"
+     
+        port = 465  
+        password = EMAIL_PASSWORD
+        sender_email = EMAIL_ADDR
         receiver_email = email
         message = MIMEText("Hi there,\n\n"+otp+" is your Kart-O-City login OTP")
         message['Subject'] = 'Kart-O-City Login OTP'
-        message['From'] = 'kartocity.pvt.ltd@gmail.com'
+        message['From'] = EMAIL_ADDR
         message['To'] = email
 
         server = smtplib.SMTP_SSL("smtp.gmail.com", port)
@@ -75,8 +64,8 @@ class SellerLogin(View):
 
                 phone = seller.phone
                 keygen = generateKey()
-                key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
-                OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model for OTP is created
+                key = base64.b32encode(keygen.returnValue(seller.password).encode())  # Key is generated
+                OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model for OTP is created
                 print("otp ",OTP.now())
                 otpobj = sendOTP()
 

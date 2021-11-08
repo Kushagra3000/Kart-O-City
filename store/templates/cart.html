@@ -206,21 +206,6 @@
                 </div>
                 
                     <input hidden type="number" name="total_price" value={{products|total_cart_price:request.session.cart}} id="" class="form-control" placeholder="" aria-describedby="helpId">
-                  
-
-                 <!--  <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_NWZijDjIFaRFJk"
-                      data-amount={{products|total_cart_price2:request.session.cart}}
-                      data-currency="INR"
-                      data-order_id="{{payment.id}}"
-                      data-buttontext="Pay with Razorpay"
-                      data-name={{first_name}}
-                      data-send_sms_hash= "true"
-                      data-image="https://i.ibb.co/QHXWKtv/Screenshot-2021-10-20-230640.png"
-                      data-prefill.name={{first_name}}
-                      data-prefill.email={{email}}
-                      data-prefill.contact = {{phone}}
-                      data-theme.color="#1589FF">
-                      </script> -->
 
                   <input type="submit" class="btn float-right btn-outline-info col-lg-6" value="Send OTP">
             </form>

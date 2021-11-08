@@ -27,5 +27,7 @@ class Customer(models.Model):
             return True
 
         return  False
+    def __str__(self):
+        return self.first_name
 
 

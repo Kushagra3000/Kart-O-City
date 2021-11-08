@@ -1,5 +1,6 @@
 from django.shortcuts import render , redirect , HttpResponseRedirect
 from django.contrib.auth.hashers import  check_password
+from django.contrib.auth.hashers import  make_password
 from store.models.customer import Customer
 from django.views import  View
 from datetime import datetime
@@ -12,6 +13,9 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from store.templates.captcha import MyForm
 from kartocity.settings import EMAIL_PASSWORD
+from kartocity.settings import EXPIRY_TIME
+from kartocity.settings import EMAIL_ADDR
+
 
 class generateKey:
     @staticmethod
@@ -23,11 +27,11 @@ class sendOTP:
     def otpsend(email,phone,otp):
         port = 465 
         password = EMAIL_PASSWORD
-        sender_email = "kartocity.pvt.ltd@gmail.com"
+        sender_email = EMAIL_ADDR
         receiver_email = email
         message = MIMEText("Hi there,\n\n"+otp+" is your Kart-O-City login OTP")
         message['Subject'] = 'Kart-O-City Login OTP'
-        message['From'] = 'kartocity.pvt.ltd@gmail.com'
+        message['From'] = EMAIL_ADDR
         message['To'] = email
 
         server = smtplib.SMTP_SSL("smtp.gmail.com", port)
@@ -58,9 +62,9 @@ class Login(View):
             if flag :
                 phone = customer.phone
                 keygen = generateKey()
-                key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
-                OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model for OTP is created
-                print("otp ",OTP.now())
+                key = base64.b32encode(keygen.returnValue(customer.password).encode()) 
+                OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)
+                print("otp ",OTP.now(),key)
                 otpobj = sendOTP()
                 otpobj.otpsend(email,phone,OTP.now())
                 return render(request, 'otp.html', {'email':email})

@@ -10,6 +10,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='uploads/products/')
     image2 = models.ImageField(upload_to='uploads/products/')
     image3 = models.ImageField(upload_to='uploads/products/')
+    status = models.BooleanField(default=False)
 
     def register(self):
         self.save()

@@ -12,7 +12,9 @@ from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ObjectDoesNotExist
 import pyotp
 import base64
-
+from kartocity.settings import EMAIL_PASSWORD
+from kartocity.settings import EXPIRY_TIME
+from kartocity.settings import EMAIL_ADDR
 
 
 class generateKey:
@@ -23,8 +25,7 @@ class generateKey:
 
 def checkotp(request):
 
-    # virtualkeyboard.main()
-    
+
     email = request.POST.get('email')
     otp = request.POST.get('otp')
 
@@ -34,9 +35,9 @@ def checkotp(request):
     Customer.return_url = request.GET.get('return_url')
 
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
-    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
-    if OTP.verify(otp):  # Verifying the OTP
+    key = base64.b32encode(keygen.returnValue(customer.password).encode())
+    OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)
+    if OTP.verify(otp):
         request.session['customer'] = customer.id
         if Customer.return_url:
             return HttpResponseRedirect(Customer.return_url)
@@ -54,14 +55,13 @@ def checkotpmanageprofile(request):
     last_name = request.POST.get('last_name')
     email = request.POST.get('email')
     phone = request.POST.get('phone')
-    # password = request.POST.get('password')
     otp = request.POST.get('otp')
     customer = Customer.get_customer_by_email(emailold)
 
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
-    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
-    if OTP.verify(otp):  # Verifying the OTP
+    key = base64.b32encode(keygen.returnValue(phone).encode())
+    OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)
+    if OTP.verify(otp):
         customer.first_name = first_name
         customer.last_name = last_name
         customer.phone = phone
@@ -98,11 +98,10 @@ def checkotpsellersignup(request):
                         password=password)
     
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
-    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
+    key = base64.b32encode(keygen.returnValue(phone).encode()) 
+    OTP = pyotp.TOTP(key,interval = EXPIRY_TIME) 
     print("Idhar otp: ",OTP.now())
-    if OTP.verify(otp):  # Verifying the OTP
-        # print(first_name, last_name, phone, email, password)
+    if OTP.verify(otp):
         seller.password = make_password(seller.password)
         seller.register()
         return redirect('homepage')
@@ -123,8 +122,8 @@ def checkotpsellerlogin(request):
     Seller.return_url = request.GET.get('return_url')
 
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
-    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
+    key = base64.b32encode(keygen.returnValue(seller.password).encode())
+    OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)
 
     if OTP.verify(otp): 
         request.session['seller'] = seller.id
@@ -161,7 +160,7 @@ def otpcheckout(request):
     
     keygen = generateKey()
     key = base64.b32encode(keygen.returnValue(phone).encode()) 
-    OTP = pyotp.TOTP(key,interval = 120) 
+    OTP = pyotp.TOTP(key,interval = EXPIRY_TIME) 
     otp = request.POST.get('otp')
     amount = int(amount)*100
     print('amount',amount,type(amount))
@@ -239,7 +238,7 @@ def checkotpforgotcustomer(request):
     phone = customer.phone
     keygen = generateKey()
     key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
-    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
+    OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model 
     print("Idhar otp: ",OTP.now())
     if OTP.verify(otp):
         return render(request, 'newpasswordcustomer.html', {'email':email}) 
@@ -254,7 +253,7 @@ def checkotpforgotseller(request):
     phone = customer.phone
     keygen = generateKey()
     key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
-    OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model 
+    OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model 
     print("Idhar otp: ",OTP.now())
     if OTP.verify(otp):
         return render(request, 'newpasswordseller.html', {'email':email}) 

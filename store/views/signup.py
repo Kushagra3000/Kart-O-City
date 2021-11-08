@@ -10,9 +10,11 @@ from django.core.exceptions import ObjectDoesNotExist
 import pyotp
 import base64
 import os
-from twilio.rest import Client
 import smtplib, ssl
 from email.mime.text import MIMEText
+from kartocity.settings import EMAIL_PASSWORD
+from kartocity.settings import EXPIRY_TIME
+from kartocity.settings import EMAIL_ADDR
 
 
 
@@ -24,26 +26,14 @@ class generateKey:
 class sendOTP:
     @staticmethod
     def otpsend(email,phone,otp):
-        # account_sid = 'AC40ef4acb7313454341fb58903c072b00'
-        # auth_token = '2b07567ca59e4e0b61c1524a06f89068'
-        # 
-        # 
-        # client = Client(account_sid, auth_token)
-        # print('phone number ',phone)
-        # message = client.messages.create(
-        #                               body=f'OTP for login-{otp}',
-        #                               from_='+13187319719',
-        #                               to='+919773709020'
-        #                           )
-
-        # print(message.sid)
-        port = 465  # For SSL
-        password = "{k@RT-02c!2y}"
-        sender_email = "kartocity.pvt.ltd@gmail.com"
+        
+        port = 465  
+        password = EMAIL_PASSWORD
+        sender_email = EMAIL_ADDR
         receiver_email = email
         message = MIMEText("Hi there,\n\n"+otp+" is your Kart-O-City signup OTP")
         message['Subject'] = 'Kart-O-City Signup OTP'
-        message['From'] = 'kartocity.pvt.ltd@gmail.com'
+        message['From'] = EMAIL_ADDR
         message['To'] = email
 
         server = smtplib.SMTP_SSL("smtp.gmail.com", port)
@@ -64,7 +54,6 @@ class Signup(View):
         phone = postData.get('phone')
         email = postData.get('email')
         password = postData.get('password')
-        # validation
         value = {
             'first_name': first_name,
             'last_name': last_name,
@@ -84,19 +73,14 @@ class Signup(View):
 
             phone = customer.phone
             keygen = generateKey()
-            key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
-            OTP = pyotp.TOTP(key,interval = 50)  # TOTP Model for OTP is created
+            key = base64.b32encode(keygen.returnValue(phone).encode())  
+            OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  
             print("otp ",OTP.now())
             otpobj = sendOTP()
             otpobj.otpsend(email,phone,OTP.now())
 
-
             return render(request, 'otpsignup.html', {'first_name': first_name,'last_name': last_name,'phone': phone,'email': email,'password':password})
 
-            # print(first_name, last_name, phone, email, password)
-            # customer.password = make_password(customer.password)
-            # customer.register()
-            # return redirect('homepage')
         else:
             data = {
                 'error': error_message,

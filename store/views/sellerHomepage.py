@@ -9,9 +9,12 @@ from store.templates.sellerForm import SellerForm
 
 class SellerHomepage(View):
     def get(self,request):
-        context = {}
-        context['form'] = SellerForm
-        return render(request,'sellerHomePage.html',context)
+        if request.session.get('seller'):
+            context = {}
+            context['form'] = SellerForm
+            return render(request,'sellerHomePage.html',context)
+        else:
+            return redirect('sellerLogin')
     def post(self,request):
         lst = []
         lst.append(request.session.get('seller'))

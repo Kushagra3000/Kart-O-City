@@ -46,6 +46,7 @@ class sendOTP:
 
 
 def forgotcustomer(request):
+
 	return render(request, 'forgotcustomer.html', {})
 	
 
@@ -92,6 +93,8 @@ def newpasswordcustomer(request):
 	password2 = request.POST.get('pswrd_2')
 	if password1==password2:
 		customer = Customer.get_customer_by_email(email)
+		if not customer:
+			return redirect('forgotcustomer')
 		customer.password = make_password(password1)
 		confirm_message = "Password Updated"
 		customer.register()
@@ -106,6 +109,8 @@ def newpasswordseller(request):
 	password2 = request.POST.get('pswrd_2')
 	if password1==password2:
 		customer = Seller.get_seller_by_email(email)
+		if not customer:
+			return redirect('forgotseller')
 		customer.password = make_password(password1)
 		confirm_message = "Password Updated"
 		customer.register()

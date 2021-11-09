@@ -8,9 +8,12 @@ from django.views import View
 class AddProduct(View):
 
     def get(self,request):
-        context = {}
-        context['form'] = AddProductForm
-        return render(request, 'AddProduct.html',context)
+    	if request.session.get('seller'):
+    		context = {}
+    		context['form'] = AddProductForm
+    		return render(request, 'AddProduct.html',context)
+    	else:
+    		return redirect('sellerLogin')
     
     def post(self,request):
         form = AddProductForm(request.POST,request.FILES)

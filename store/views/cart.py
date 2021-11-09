@@ -6,17 +6,20 @@ from store.models.product import  Product
 
 class Cart(View):
     def get(self , request):
-    	lst = []
-    	lst.append(request.session.get('customer'))
-    	customer = Customer.get_customer_by_id(lst)
-    	ids = list(request.session.get('cart').keys())
-    	products = Product.get_products_by_id(ids)
-   
-    	values = {
-    	    'first_name': customer.first_name,
-    	    'last_name': customer.last_name,
-    	    'phone': customer.phone,
-    	    'email': customer.email,
-    	    'products':products
-    	}
-    	return render(request , 'cart.html' , values )
+        if request.session.get('customer'):
+        	lst = []
+        	lst.append(request.session.get('customer'))
+        	customer = Customer.get_customer_by_id(lst)
+        	ids = list(request.session.get('cart').keys())
+        	products = Product.get_products_by_id(ids)
+       
+        	values = {
+        	    'first_name': customer.first_name,
+        	    'last_name': customer.last_name,
+        	    'phone': customer.phone,
+        	    'email': customer.email,
+        	    'products':products
+        	}
+        	return render(request , 'cart.html' , values )
+        else:
+            return redirect('login')

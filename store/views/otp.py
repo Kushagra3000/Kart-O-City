@@ -24,13 +24,12 @@ class generateKey:
 
 
 def checkotp(request):
-
-
     email = request.POST.get('email')
     otp = request.POST.get('otp')
-
     customer = Customer.get_customer_by_email(email)
 
+    if not customer:
+        return redirect('login')
     phone = customer.phone
     Customer.return_url = request.GET.get('return_url')
 

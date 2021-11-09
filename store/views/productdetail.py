@@ -9,7 +9,8 @@ from store.models.category import Category
 
 
 def product_details2(request):
-    
+    if request.method == "GET":
+        return redirect('store')
     product = request.POST.get('clickedproduct')
     remove = request.POST.get('remove')
     cart = request.session.get('cart')

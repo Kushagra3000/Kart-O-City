@@ -47,6 +47,8 @@ class sendOTP:
 def Profile(request):
 	lst = []
 	lst.append(request.session.get('customer'))
+	if not lst[0]:
+		return redirect('login')
 	customer = Customer.get_customer_by_id(lst)
 
 	values = {

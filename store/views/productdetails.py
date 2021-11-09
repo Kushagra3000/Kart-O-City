@@ -18,8 +18,9 @@ def product_details(request):
 		temp = []
 		temp.append(clickedproduct)
 		clickedproduct = Product.get_products_by_id(temp)
-
 		return render(request, 'product_details.html', {'clickedproduct':clickedproduct})
+	else:
+		return redirect('store')
 
 
 def product_details2(request):
@@ -53,3 +54,5 @@ def product_details2(request):
 		clickedproduct = Product.get_products_by_id(temp)
 		
 		return render(request, 'product_details.html', {'clickedproduct':clickedproduct})
+	else:
+		return redirect('store')

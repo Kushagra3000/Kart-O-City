@@ -7,9 +7,9 @@ class Product(models.Model):
     price = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     description = models.CharField(max_length=200, default='' , null=True , blank=True)
-    image = models.ImageField(upload_to='uploads/products/')
-    image2 = models.ImageField(upload_to='uploads/products/')
-    image3 = models.ImageField(upload_to='uploads/products/')
+    image = models.ImageField(upload_to='Kart-O-City/uploads/products/')
+    image2 = models.ImageField(upload_to='Kart-O-City/uploads/products/')
+    image3 = models.ImageField(upload_to='Kart-O-City/uploads/products/')
     status = models.BooleanField(default=False)
 
     def register(self):

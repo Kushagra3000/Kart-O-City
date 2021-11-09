@@ -1,26 +1,36 @@
-{% extends 'base.html' %}
 
 
-{% block content %}
+{% extends 'virtual.html' %}
 
 
-<form action="{% url 'otpsellerlogin' %}" method="post">
-                
-                {% csrf_token %}
+{% block virtual %}
 
-               	<div class="form-group">
-               	  <label for="">OTP</label>
-               	  <input type="text" name="otp" id="" class="form-control" placeholder="" aria-describedby="helpId">
-               	  
-               	</div>
+<style type="text/css">
+    .upl{ margin-top: 15px; }
+    .downl{ margin-top: -3px; }
+    .rightl{ margin-right: 6px; }
+    .leftl{margin-left: 6px;}
+</style>
 
-               	<input hidden="" type="email" name='email' value='{{email}}'>
-                
-                <div class="form-group">
-                    <input class="btn btn-sm btn-info col-lg-8" type="submit" value="OTP">
+        <body>
+            <div class="container" style="margin-top:80px;">
+            <div class="panel panel-default">
+              
+               <div class="panel-body">
+                    <form action="{% url 'otpsellerlogin' %}" method="post">
+                        {% csrf_token %}
+                        <center><h2>OTP</h2></center>
+                        <input  type="text" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email}}" />
+                        <input hidden="" type="text" name='email' value='{{email}}'>
+                        <div class="form-group upl">
+                            <input class="btn btn-sm btn-info col-lg-12" type="submit" value="Enter OTP">
+                        </div>
+                    </form>
                 </div>
-                
-            </form>
+
+            </div>
+          </div>
+      </body>
 
 
 {% endblock %}

@@ -30,8 +30,8 @@ class Seller(models.Model):
     phone = models.CharField(max_length=15)
     email = models.EmailField()
     password = models.CharField(max_length=500)
-    panCard = models.FileField(upload_to='uploads/', null=True)
-    gstDocument = models.FileField(upload_to='uploads/', null=True)
+    panCard = models.FileField(upload_to='Kart-O-City/uploads/userdocuments', null=True)
+    gstDocument = models.FileField(upload_to='Kart-O-City/uploads/userdocuments', null=True)
     status = models.CharField(max_length=50,default="not verified")
     
 
@@ -42,7 +42,7 @@ class Seller(models.Model):
             otpobj.otpsend(self.email,message)
         elif self.status == "rejected":
             otpobj = sendOTP()
-            message = "Hi "+str(self.first_name)+"\n\nYour seller status on Kart-O-City has been rejected due to invalid documents. You can registter yourself again with correct documents.\n\nThanks from team Kart-O-City"
+            message = "Hi "+str(self.first_name)+"\n\nYour seller status on Kart-O-City has been rejected due to invalid documents. You can register yourself again with correct documents.\n\nThanks from team Kart-O-City"
             otpobj.otpsend(self.email,message)
             self.delete()
 

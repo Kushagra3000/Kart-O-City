@@ -44,9 +44,11 @@ class sendOTP:
 class Login(View):
     return_url = None
     def get(self , request):
-        form = MyForm
-        Login.return_url = request.GET.get('return_url')
-        return render(request , 'login.html',{"form":form})
+        if not request.session.get('customer'):
+            form = MyForm
+            Login.return_url = request.GET.get('return_url')
+            return render(request , 'login.html',{"form":form})
+        return redirect('homepage')
 
     def post(self , request):
         email = request.POST.get('email')

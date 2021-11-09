@@ -24,7 +24,6 @@ class generateKey:
 class sendOTP:
     @staticmethod
     def otpsend(email,phone,otp):
-     
         port = 465  
         password = EMAIL_PASSWORD
         sender_email = EMAIL_ADDR
@@ -38,8 +37,6 @@ class sendOTP:
         server.login(sender_email, password)
         server.sendmail(sender_email, [receiver_email], message.as_string())
         server.quit()
-
-
 
 class SellerLogin(View):
     return_url = None

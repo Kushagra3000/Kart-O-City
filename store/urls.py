@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 from .views.home import Index , store
 from .views.signup import Signup
+from .views.StatusPage import StatusPage
 from .views.login import Login
 from .views.cart import Cart
 from .views.sellerLogin import SellerLogin
@@ -44,6 +45,7 @@ urlpatterns = [
     path('editprofile', profile.editprofile, name='editprofile'),
     path('manageprofile',profile.manageprofile,name='manageprofile'),
     path('addProduct',AddProduct.as_view(),name='addProduct'),
+    path('statuspage',StatusPage.as_view(),name='statuspage'),
     path('otp/',otp.checkotp,name='otp'),
     path('checkotpsellersignup',otp.checkotpsellersignup,name='checkotpsellersignup'),
     path('otpcheckout',otp.otpcheckout,name='otpcheckout'),

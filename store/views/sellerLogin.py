@@ -41,9 +41,22 @@ class sendOTP:
 class SellerLogin(View):
     return_url = None
     def get(self , request):
-        form = MyForm
-        Seller.return_url = request.GET.get('return_url')
-        return render(request , 'sellerLogin.html',{"form":form})
+        if not request.session.get('seller'):
+            form = MyForm
+            Seller.return_url = request.GET.get('return_url')
+            return render(request , 'sellerLogin.html',{"form":form})
+        elif request.session.get('customer'):
+            return redirect('homepage')
+        else:
+            lst = []
+            lst.append(request.session.get('seller'))
+            seller = Seller.get_customer_by_id(lst)
+            if(seller.status == "verified"):
+                return redirect('addProduct')
+            elif(seller.panCard!='' and seller.gstDocument!=''):
+                return redirect('statuspage')
+            else:
+                return redirect('sellerHomepage')
 
     def post(self , request):
         email = request.POST.get('email')

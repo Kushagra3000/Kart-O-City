@@ -67,7 +67,8 @@ def sendotpforgotcustomer(request):
 		return render(request, 'otpforgotcustomer.html', {'email':email})
 	else:
 		error_msg = "Email is not registered!"
-		return render(request, 'login.html', {'error':error_msg})
+		form = MyForm
+		return render(request, 'login.html', {'error':error_msg,'form':form})
 	
 
 def sendotpforgotseller(request):
@@ -84,7 +85,8 @@ def sendotpforgotseller(request):
 		return render(request, 'otpforgotseller.html', {'email':email})
 	else:
 		error_msg = "Email is not registered!"
-		return render(request, 'sellerLogin.html', {'error':error_msg})
+		form = MyForm
+		return render(request, 'sellerLogin.html', {'error':error_msg,'form':form})
 
 
 def newpasswordcustomer(request):

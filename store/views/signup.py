@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from store.models.customer import Customer
+from store.models.seller import Seller
 from django.views import View
 from django.contrib.auth.hashers import  check_password
 from store.models.customer import Customer
@@ -45,8 +46,21 @@ class sendOTP:
 
 class Signup(View):
     def get(self, request):
-        return render(request, 'signup.html')
-
+        if (not request.session.get('seller')) and (not request.session.get('customer')):
+            return render(request,'signup.html')
+        elif request.session.get('seller'):
+            lst = []
+            lst.append(request.session.get('seller'))
+            seller = Seller.get_customer_by_id(lst)
+            if(seller.status == "verified"):
+                return redirect('addProduct')
+            elif(seller.panCard!='' and seller.gstDocument!=''):
+                return redirect('statuspage')
+            else:
+                return redirect('sellerHomepage')
+        else:
+            return redirect('homepage')
+        
     def post(self, request):
         postData = request.POST
         first_name = postData.get('firstname')

@@ -40,7 +40,20 @@ class sendOTP:
 
 class SellerSignUp(View):
     def get(self, request):
-        return render(request, 'sellerSignUp.html')
+        if (not request.session.get('seller')) and (not request.session.get('customer')):
+            return render(request,'sellerSignUp.html')
+        elif request.session.get('seller'):
+            lst = []
+            lst.append(request.session.get('seller'))
+            seller = Seller.get_customer_by_id(lst)
+            if(seller.status == "verified"):
+                return redirect('addProduct')
+            elif(seller.panCard!='' and seller.gstDocument!=''):
+                return redirect('statuspage')
+            else:
+                return redirect('sellerHomepage')
+        else:
+            return redirect('homepage')
     def post(self,request):
         postData = request.POST
         first_name = postData.get('firstname')

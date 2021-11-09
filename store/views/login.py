@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect , HttpResponseRedirect
 from django.contrib.auth.hashers import  check_password
 from django.contrib.auth.hashers import  make_password
 from store.models.customer import Customer
+from store.models.seller import Seller
 from django.views import  View
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
@@ -48,7 +49,18 @@ class Login(View):
             form = MyForm
             Login.return_url = request.GET.get('return_url')
             return render(request , 'login.html',{"form":form})
-        return redirect('homepage')
+        elif request.session.get('seller'):
+            lst = []
+            lst.append(request.session.get('seller'))
+            seller = Seller.get_customer_by_id(lst)
+            if(seller.status == "verified"):
+                return redirect('addProduct')
+            elif(seller.panCard!='' and seller.gstDocument!=''):
+                return redirect('statuspage')
+            else:
+                return redirect('sellerHomepage')
+        else:
+            return redirect('homepage')
 
     def post(self , request):
         email = request.POST.get('email')

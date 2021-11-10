@@ -14,13 +14,13 @@ import pyotp
 import base64
 from kartocity.settings import EMAIL_PASSWORD
 from kartocity.settings import EXPIRY_TIME
-from kartocity.settings import EMAIL_ADDR
+from kartocity.settings import EMAIL_ADDR,SECRET_KEY_OTP
 
 
 class generateKey:
     @staticmethod
     def returnValue(phone):
-        return str(phone) + str(datetime.date(datetime.now())) + "Some Random Secret Key"
+        return str(phone) + SECRET_KEY_OTP
 
 
 def checkotp(request):
@@ -158,7 +158,9 @@ def otpcheckout(request):
 
     
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode()) 
+    key1 = base64.b32encode(keygen.returnValue(phone).encode()) 
+    key2 = base64.b32encode(keygen.returnValue(key1).encode())
+    key = base64.b32encode(keygen.returnValue(key2).encode())
     OTP = pyotp.TOTP(key,interval = EXPIRY_TIME) 
     otp = request.POST.get('otp')
     amount = int(amount)*100
@@ -236,7 +238,9 @@ def checkotpforgotcustomer(request):
     customer = Customer.get_customer_by_email(email)
     phone = customer.phone
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
+    key1 = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
+    key2 = base64.b32encode(keygen.returnValue(key1).encode())
+    key = base64.b32encode(keygen.returnValue(key2).encode())
     OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model 
     print("Idhar otp: ",OTP.now())
     if OTP.verify(otp):
@@ -251,7 +255,9 @@ def checkotpforgotseller(request):
     customer = Seller.get_seller_by_email(email)
     phone = customer.phone
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
+    key1 = base64.b32encode(keygen.returnValue(phone).encode())  # Generating Key
+    key2 = base64.b32encode(keygen.returnValue(key1).encode())
+    key = base64.b32encode(keygen.returnValue(key2).encode())
     OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model 
     print("Idhar otp: ",OTP.now())
     if OTP.verify(otp):

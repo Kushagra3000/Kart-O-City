@@ -12,10 +12,10 @@
                     <form action="{% url 'otpcheckout' %}" method="post">
                         {% csrf_token %}
                         <center><h2>OTP</h2></center>
-                        <input  type="text" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email}}" />
-                        <input hidden="" type="text" name='email' value='{{email}}'>
-                        <input hidden="" type="text" name='address' value='{{address}}'>
-                        <input hidden="" type="number" name='total_price' value='{{total_price}}'>
+                        <input  type="text" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email|safe}}" />
+                        <input hidden="" type="text" name='email' value='{{email|safe}}'>
+                        <input hidden="" type="text" name='address' value='{{address|safe}}'>
+                        <input hidden="" type="number" name='total_price' value='{{total_price|safe}}'>
                         <div class="form-group">
                             <input class="btn btn-sm btn-info col-lg-12" type="submit" value="Enter OTP">
                         </div>
@@ -25,23 +25,23 @@
                     {%if checkoutotp%}
                     <form action="{% url 'otpcheckout2' %}" method="post">
                         {% csrf_token %}
-                        <input hidden="" type="text" name='email' value='{{email}}'>
-                        <input hidden="" type="text" name='address' value='{{address}}'>
-                        <input hidden="" type="number" name='total_price' value='{{total_price}}'>
+                        <input hidden="" type="text" name='email' value='{{email|safe}}'>
+                        <input hidden="" type="text" name='address' value='{{address|safe}}'>
+                        <input hidden="" type="number" name='total_price' value='{{total_price|safe}}'>
                         <h2>Proceed with razorpay for payment</h2>
 
                         
                         <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_NWZijDjIFaRFJk"
-                             data-amount={{total_price}}
+                             data-amount={{total_price|safe}}
                              data-currency="INR"
-                             data-order_id="{{payment.id}}"
+                             data-order_id="{{payment.id|safe}}"
                              data-buttontext="Pay with Razorpay"
-                             data-name={{first_name}}
+                             data-name={{first_name|safe}}
                              data-send_sms_hash= "true"
                              data-image="https://i.ibb.co/QHXWKtv/Screenshot-2021-10-20-230640.png"
-                             data-prefill.name={{first_name}}
-                             data-prefill.email={{email}}
-                             data-prefill.contact = {{phone}}
+                             data-prefill.name={{first_name|safe}}
+                             data-prefill.email={{email|safe}}
+                             data-prefill.contact = {{phone|safe}}
                              data-theme.color="#1589FF">
 
                         </script>

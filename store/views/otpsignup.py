@@ -10,12 +10,12 @@ import pyotp
 import base64
 from kartocity.settings import EMAIL_PASSWORD
 from kartocity.settings import EXPIRY_TIME
-from kartocity.settings import EMAIL_ADDR
+from kartocity.settings import EMAIL_ADDR,SECRET_KEY_OTP
 
 class generateKey:
     @staticmethod
     def returnValue(phone):
-        return str(phone) + str(datetime.date(datetime.now())) + "Some Random Secret Key"
+        return str(phone) + SECRET_KEY_OTP
 
 
 def checkotp(request):
@@ -34,7 +34,9 @@ def checkotp(request):
                         password=password)
     
     keygen = generateKey()
-    key = base64.b32encode(keygen.returnValue(phone).encode()) 
+    key1 = base64.b32encode(keygen.returnValue(phone).encode()) 
+    key2 = base64.b32encode(keygen.returnValue(key1).encode())
+    key = base64.b32encode(keygen.returnValue(key2).encode())
     OTP = pyotp.TOTP(key,interval = EXPIRY_TIME) 
    
     if OTP.verify(otp):  

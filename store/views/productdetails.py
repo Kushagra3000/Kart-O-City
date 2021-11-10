@@ -11,16 +11,21 @@ from django.views import View
 
 
 	
-def product_details(request):
-	if request.method == "POST":
-		clickedproduct = request.POST.get('clickedproduct')
-		print(clickedproduct)
-		temp = []
-		temp.append(clickedproduct)
-		clickedproduct = Product.get_products_by_id(temp)
-		return render(request, 'product_details.html', {'clickedproduct':clickedproduct})
-	else:
-		return redirect('store')
+def product_details(request,slug,slug2):
+	temp = []
+	temp.append(slug)
+	clickedproduct = Product.get_products_by_id(temp)
+	return render(request, 'product_details.html', {'clickedproduct':clickedproduct})
+
+	# if request.method == "POST":
+	# 	clickedproduct = request.POST.get('clickedproduct')
+	# 	print(clickedproduct)
+	# 	temp = []
+	# 	temp.append(clickedproduct)
+	# 	clickedproduct = Product.get_products_by_id(temp)
+	# 	return render(request, 'product_details.html', {'clickedproduct':clickedproduct})
+	# else:
+	# 	return redirect('store')
 
 
 def product_details2(request):

@@ -530,34 +530,17 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
           <a class="nav-link active" aria-current="page" href="/"><button type="button" class="btn btn-outline-dark">Home</button></a>
         </li>
       
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Categories
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li> -->
-
-
-
         <div class="dropdown">
           <button class="btn btn-outline-warning  dropdown-toggle up btn-outline-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a href="/" class="list-group-item list-group-item-action">All Products</a>
               {% for category in categories %}
-              <a href="/?category={{category.id}}"
-                class="list-group-item list-group-item-action">{{category.name}}</a>
+              <a href="/?category={{category.id|safe}}"
+                class="list-group-item list-group-item-action">{{category.name|safe}}</a>
               {% endfor %}
           </div>
         </div>
-
-
- 
 
       </ul>
       <form class="navbar-collapse left" method=POST action="{% url 'search-products' %}">
@@ -570,7 +553,7 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
       <li class="nav-item ">
           
           <a class="nav-link" href="/cart">
-            <button class="btn btn-info up btn-outline-dark">Cart <span class="badge badge-info">{{request.session.cart.keys|length}}</span>
+            <button class="btn btn-info up btn-outline-dark">Cart <span class="badge badge-info">{{request.session.cart.keys|length|safe}}</span>
             <span class="sr-only">(current)</span></button>
             </a>
         </li>

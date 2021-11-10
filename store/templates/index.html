@@ -19,7 +19,7 @@ body{
 				{% for product in products %}
 					{%if product.status%}
 					<div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
-						<form class="btn-light" method=POST action="{% url 'product-details' %}">
+						<form class="btn-light" method=POST action="{% url 'product-details' product.id product.name %}">
 								{% csrf_token %}
 								<input hidden type="text" name="clickedproduct" value="{{product.id}}">
 								<input type="image" value=image class="card-img-top" src="{{product.image.url}}">

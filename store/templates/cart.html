@@ -92,13 +92,13 @@
    <div class="border rounded p-4 m-4">
     {%if error_message%}
       <div class="alert alert-danger">
-        <strong>{{error_message}}!</strong>Please enter OTP sent to your email {{email}}  
+        <strong>{{error_message|safe}}!</strong>Please enter OTP sent to your email {{email|safe}}  
       </div>
     {%endif%}
 
     {%if confirm_msg %}
       <div class="alert alert-success">
-        <strong>Success!</strong> {{confirm_msg }}
+        <strong>Success!</strong> {{confirm_msg|safe }}
       </div>
     {%endif%}
 
@@ -121,11 +121,11 @@
                 {% for product in products %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td><img style="height: 80px;" class="rounded-circle" src="{{product.image.url}}" alt=""></td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.price|currency}}</td>
-                    <td>{{product|cart_quantity:request.session.cart}}</td>
-                    <td>{{product|price_total:request.session.cart|currency}}</td>
+                    <td><img style="height: 80px;" class="rounded-circle" src="{{product.image.url|safe}}" alt=""></td>
+                    <td>{{product.name|safe}}</td>
+                    <td>{{product.price|currency|safe}}</td>
+                    <td>{{product|cart_quantity:request.session.cart|safe}}</td>
+                    <td>{{product|price_total:request.session.cart|currency|safe}}</td>
                 </tr>
 
                 {% endfor %}
@@ -136,7 +136,7 @@
                 <tr>
                     <th colspan="4"></th>
                     <th class="" colspan="">Total</th>
-                    <th>{{products|total_cart_price:request.session.cart|currency}}</th>
+                    <th>{{products|total_cart_price:request.session.cart|currency|safe}}</th>
                 </tr>
             </tfoot>
         </table>

@@ -14,7 +14,7 @@
 <div class="container">
     {% if confirm_message%}
     <div class="alert alert-success" role="alert">
-        {{confirm_message}}
+        {{confirm_message|safe}}
     </div>
     {% endif %}
     <div class="p-4 m-4">
@@ -35,14 +35,14 @@
 
                 {% if error%}
                 <div class="alert alert-danger" role="alert">
-                    {{error}}
+                    {{error|safe}}
                 </div>
                 {% endif %}
                 <!-- email -->
                 <div class="form-group">
                     <label for="">Email</label>
                     <input required type="email" name="email" id=""
-                    value="{{values.email}}" 
+                    value="{{values.email|safe}}" 
                     class=" form-control-sm form-control" placeholder="example@gmail.com">
                 </div>
 
@@ -59,7 +59,7 @@
                 <hr>
                 {% csrf_token %}
                 <center>
-                {{form.captcha}}
+                {{form.captcha|safe}}
                 <div class="form-group">
                     <center><input class="btn btn-sm btn-info col-lg-8 upl" type="submit" value="send otp"></center>
                 </div>

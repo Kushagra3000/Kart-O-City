@@ -18,12 +18,12 @@
                     <form action="{% url 'checkotpmanageprofile' %}" method="post">
                         {% csrf_token %}
                         <center><h2>OTP</h2></center>
-                        <input  type="text" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email}}" />
-                         <input hidden="" type="email" name='email' value='{{email}}'>
-                         <input hidden="" type="email" name='emailold' value='{{emailold}}'>
-                         <input hidden="" type="text" name='first_name' value='{{first_name}}'>
-                         <input hidden="" type="text" name='last_name' value='{{last_name}}'>
-                          <input hidden="" type="text" name='phone' value='{{phone}}'>
+                        <input  type="text" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email|safe}}" />
+                         <input hidden="" type="email" name='email' value='{{email|safe}}'>
+                         <input hidden="" type="email" name='emailold' value='{{emailold|safe}}'>
+                         <input hidden="" type="text" name='first_name' value='{{first_name|safe}}'>
+                         <input hidden="" type="text" name='last_name' value='{{last_name|safe}}'>
+                          <input hidden="" type="text" name='phone' value='{{phone|safe}}'>
                         <div class="form-group upl">
                             <input class="btn btn-sm btn-info col-lg-12" type="submit" value="Enter OTP">
                         </div>

@@ -14,12 +14,12 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from kartocity.settings import EMAIL_PASSWORD
 from kartocity.settings import EXPIRY_TIME
-from kartocity.settings import EMAIL_ADDR
+from kartocity.settings import EMAIL_ADDR,SECRET_KEY_OTP
 
 class generateKey:
     @staticmethod
     def returnValue(phone):
-        return str(phone) + str(datetime.date(datetime.now())) + "Some Random Secret Key"
+        return str(phone) + SECRET_KEY_OTP
 
 class sendOTP:
     @staticmethod

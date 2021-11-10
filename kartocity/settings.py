@@ -15,13 +15,13 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+SESSION_COOKIE_HTTPONLY = True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^_g%33qd(g8bjc+*40&uh(ptgkb$&-*+0!i3$lu7xj1u166cbb'
-
+SECRET_KEY_OTP = "HUMARAOTP"
 EMAIL_PASSWORD = "{k@RT-02c!2y}"
 EMAIL_ADDR = "kartocity.pvt.ltd@gmail.com"
 
@@ -31,7 +31,6 @@ EXPIRY_TIME = 120
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 

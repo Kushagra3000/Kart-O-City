@@ -18,13 +18,13 @@ from email.mime.text import MIMEText
 from store.templates.captcha import MyForm
 from kartocity.settings import EMAIL_PASSWORD
 from kartocity.settings import EXPIRY_TIME
-from kartocity.settings import EMAIL_ADDR
+from kartocity.settings import EMAIL_ADDR,SECRET_KEY_OTP
 
 
 class generateKey:
     @staticmethod
     def returnValue(phone):
-        return str(phone) + str(datetime.date(datetime.now())) + "Some Random Secret Key"
+        return str(phone) + SECRET_KEY_OTP
 
 class sendOTP:
     @staticmethod
@@ -63,7 +63,20 @@ def forgotcustomer(request):
 	
 
 def forgotseller(request):
-	return render(request, 'forgotseller.html', {})
+	if not request.session.get('seller'):
+		return render(request, 'forgotseller.html', {})
+	if request.session.get('seller'):
+		lst = []
+		lst.append(request.session.get('seller'))
+		seller = Seller.get_customer_by_id(lst)
+		if(seller.status == "verified"):
+		    return redirect('addProduct')
+		elif(seller.panCard!='' and seller.gstDocument!=''):
+		    return redirect('statuspage')
+		else:
+		    return redirect('sellerHomepage')
+	else:
+		return redirect('homepage')
 
 def sendotpforgotcustomer(request):
 	email = request.POST.get('email')
@@ -71,8 +84,12 @@ def sendotpforgotcustomer(request):
 	if customer:
 		phone = customer.phone
 		keygen = generateKey()
-		key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
+		print(keygen.returnValue(phone).encode())
+		key1 = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
+		key2 = base64.b32encode(keygen.returnValue(key1).encode())
+		key = base64.b32encode(keygen.returnValue(key2).encode())
 		OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model for OTP is created
+
 		print("otp ",OTP.now())
 		otpobj = sendOTP()
 		otpobj.otpsend(email,phone,OTP.now())
@@ -89,8 +106,10 @@ def sendotpforgotseller(request):
 	if customer:
 		phone = customer.phone
 		keygen = generateKey()
-		key = base64.b32encode(keygen.returnValue(phone).encode())  # Key is generated
-		OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model for OTP is created
+		key1 = base64.b32encode(keygen.returnValue(phone).encode())
+		key2 = base64.b32encode(keygen.returnValue(key1).encode())
+		key = base64.b32encode(keygen.returnValue(key2).encode()) 
+		OTP = pyotp.TOTP(key,interval = EXPIRY_TIME) 
 		print("otp ",OTP.now())
 		otpobj = sendOTP()
 		otpobj.otpsend(email,phone,OTP.now())

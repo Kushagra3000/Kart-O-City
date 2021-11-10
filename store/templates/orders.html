@@ -25,13 +25,13 @@
                 
                 {% for order in orders %}
                 <tr>
-                    <td>{{forloop.counter}}</td>
+                    <td>{{forloop.counter|safe}}</td>
                     <td><img style="height: 80px;" class="rounded-circle" src="{{order.product.image.url}}" alt=""></td>
-                    <td>{{order.product.name}}</td>
-                    <td>{{order.date}}</td>
-                    <td>{{order.price|currency}}</td>
-                    <td>{{order.quantity}}</td>
-                    <td>{{order.quantity|multiply:order.price|currency}}</td>
+                    <td>{{order.product.name|safe}}</td>
+                    <td>{{order.date|safe}}</td>
+                    <td>{{order.price|currency|safe}}</td>
+                    <td>{{order.quantity|safe}}</td>
+                    <td>{{order.quantity|multiply:order.price|currency|safe}}</td>
                     {% if order.status %}
                     <td><small class="badge badge-success">Completed</small></td>
                     {%else%}

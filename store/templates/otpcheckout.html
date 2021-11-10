@@ -16,6 +16,7 @@
                         <input hidden="" type="text" name='email' value='{{email|safe}}'>
                         <input hidden="" type="text" name='address' value='{{address|safe}}'>
                         <input hidden="" type="number" name='total_price' value='{{total_price|safe}}'>
+
                         <div class="form-group">
                             <input class="btn btn-sm btn-info col-lg-12" type="submit" value="Enter OTP">
                         </div>
@@ -23,15 +24,16 @@
                     {%endif%}
 
                     {%if checkoutotp%}
+                    {%if payment%}
                     <form action="{% url 'otpcheckout2' %}" method="post">
                         {% csrf_token %}
+
                         <input hidden="" type="text" name='email' value='{{email|safe}}'>
                         <input hidden="" type="text" name='address' value='{{address|safe}}'>
                         <input hidden="" type="number" name='total_price' value='{{total_price|safe}}'>
                         <h2>Proceed with razorpay for payment</h2>
 
-                        
-                        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_NWZijDjIFaRFJk"
+                        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="{{rzrkey}}"
                              data-amount={{total_price|safe}}
                              data-currency="INR"
                              data-order_id="{{payment.id|safe}}"
@@ -46,6 +48,7 @@
 
                         </script>
                     </form>
+                    {%endif%}
                     {%endif%}
 
                 </div>

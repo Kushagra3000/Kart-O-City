@@ -14,7 +14,7 @@ import pyotp
 import base64
 from kartocity.settings import EMAIL_PASSWORD
 from kartocity.settings import EXPIRY_TIME
-from kartocity.settings import EMAIL_ADDR,SECRET_KEY_OTP
+from kartocity.settings import EMAIL_ADDR,SECRET_KEY_OTP,RZRPUBLIC,RZRPRIVATE
 
 
 class generateKey:
@@ -169,13 +169,19 @@ def otpcheckout(request):
     products = Product.get_products_by_id(ids)
     if OTP.verify(otp): 
         checkoutotp = True
+        client = razorpay.Client(auth=(RZRPUBLIC, RZRPRIVATE))
+        amount = int(amount)
+        payment = client.order.create({'amount': amount, 'currency': 'INR'})
         values = {'address':address,
                     'email':email,
                     'total_price':amount,
                     'first_name':first_name,
                     'phone':phone,
-                    'checkoutotp':checkoutotp
+                    'checkoutotp':checkoutotp,
+                    'payment':payment,
+                    'rzrkey':RZRPUBLIC
                     }
+
         return render(request, 'otpcheckout.html', values)
     else:
         error_message = "Incorrect OTP"
@@ -201,7 +207,7 @@ def otpcheckout2(request):
     cart = request.session.get('cart')
     products = Product.get_products_by_id(list(cart.keys()))
     amount=request.POST.get('total_price')
-    client = razorpay.Client(auth=("rzp_test_NWZijDjIFaRFJk", "hqiJK5eJB3HAJpMl2ryPZXpc"))
+
     first_name = customer.first_name
     phone = customer.phone
     checkoutotp = False
@@ -213,23 +219,40 @@ def otpcheckout2(request):
                 'phone':phone,
                 'checkoutotp':checkoutotp
                 }
-    amount = int(amount)
-    payment = client.order.create({'amount': amount, 'currency': 'INR'})
-    print("payment",payment)
-    for product in products:
-        print(cart.get(str(product.id)))
-        order = Order(customer=Customer(id=lst[0]),
-                      product=product,
-                      price=product.price,
-                      address=address,
-                      phone=phone,
-                      quantity=cart.get(str(product.id)))
-        order.save()
-    
-    request.session['cart'] = {}
 
-    confirm_msg = "Your order has been placed."
-    return render(request, 'cart.html', {'confirm_msg':confirm_msg})
+
+
+    response = request.POST
+    params_dict = {
+       'razorpay_order_id': response['razorpay_order_id'],
+       'razorpay_payment_id': response['razorpay_payment_id'],
+       'razorpay_signature': response['razorpay_signature']
+    }
+
+ 
+    client = razorpay.Client(auth=(RZRPUBLIC, RZRPRIVATE))
+
+
+    try:
+       for product in products:
+           order = Order(customer=Customer(id=lst[0]),
+                         product=product,
+                         price=product.price,
+                         address=address,
+                         phone=phone,
+                         razorpayorderid=response['razorpay_order_id'],
+                         razorpaypaymentid=response['razorpay_payment_id'],
+                         quantity=cart.get(str(product.id)))
+
+           order.save()
+       
+       request.session['cart'] = {}
+       confirm_msg = "Your order has been placed."
+       return render(request, 'cart.html', {'confirm_msg':confirm_msg})
+    except:
+       error_message = "Payment Failed Please Try Again!."
+       return render(request, 'cart.html', {'error_message':error_message})
+
 
 
 def checkotpforgotcustomer(request):
@@ -242,7 +265,7 @@ def checkotpforgotcustomer(request):
     key2 = base64.b32encode(keygen.returnValue(key1).encode())
     key = base64.b32encode(keygen.returnValue(key2).encode())
     OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model 
-    print("Idhar otp: ",OTP.now())
+    
     if OTP.verify(otp):
         return render(request, 'newpasswordcustomer.html', {'email':email}) 
     else:
@@ -259,7 +282,7 @@ def checkotpforgotseller(request):
     key2 = base64.b32encode(keygen.returnValue(key1).encode())
     key = base64.b32encode(keygen.returnValue(key2).encode())
     OTP = pyotp.TOTP(key,interval = EXPIRY_TIME)  # TOTP Model 
-    print("Idhar otp: ",OTP.now())
+    
     if OTP.verify(otp):
         return render(request, 'newpasswordseller.html', {'email':email}) 
     else:

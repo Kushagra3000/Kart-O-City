@@ -20,6 +20,7 @@ class Cart(View):
         	    'email': customer.email,
         	    'products':products
         	}
+
         	return render(request , 'cart.html' , values )
         else:
             return redirect('login')

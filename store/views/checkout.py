@@ -53,13 +53,6 @@ class CheckOut(View):
         first_name = customer.first_name
         phone = customer.phone
         checkoutotp = False
-        values = {'address':address,
-                    'email':email,
-                    'total_price':amount,
-                    'first_name':first_name,
-                    'phone':phone,
-                    'checkoutotp':checkoutotp
-                    }
 
         keygen = generateKey()
         key1 = base64.b32encode(keygen.returnValue(phone).encode())
@@ -69,5 +62,14 @@ class CheckOut(View):
         print("otp ",OTP.now())
         otpobj = sendOTP()
         otpobj.otpsend(email,phone,OTP.now())
+
+        
+        values = {'address':address,
+                    'email':email,
+                    'total_price':amount,
+                    'first_name':first_name,
+                    'phone':phone,
+                    'checkoutotp':checkoutotp,
+                    }
 
         return render(request, 'otpcheckout.html', values)

@@ -96,7 +96,12 @@ body{
             {% endif %}
 
           </div>
+          {% load social_share %}
+          {% post_to_facebook object_or_url "<p style='color: blue;'>facebook</p>" %}
+          {% post_to_telegram "See the amazing product " object_or_url %}
+          {% post_to_whatsapp object_or_url "<p style='color: green;'>whatsapp</p>" %}
     </div>
+    
   </div>
  {% endfor %}
 </section>

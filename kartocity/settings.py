@@ -24,6 +24,8 @@ SECRET_KEY = '^_g%33qd(g8bjc+*40&uh(ptgkb$&-*+0!i3$lu7xj1u166cbb'
 SECRET_KEY_OTP = "HUMARAOTP"
 EMAIL_PASSWORD = "{k@RT-02c!2y}"
 EMAIL_ADDR = "kartocity.pvt.ltd@gmail.com"
+RZRPUBLIC = "rzp_test_BcnNRflMrlQAcF"
+RZRPRIVATE = "lFMgfW6pEU9Ts84ur8wxOyPc"
 
 EXPIRY_TIME = 120
 
@@ -41,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "captcha",
+    'captcha',
+    'django_social_share',
     'store'
 ]
 

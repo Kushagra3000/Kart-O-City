@@ -9,6 +9,10 @@
 .down{
   margin-top: 40px;
 }
+.upp{ margin-top: 8px; }
+.downp{ margin-top: -3px; }
+.rightp{ margin-right: 6px; }
+.leftp{margin-left: 20px;}
 
 body{
     background-color: #EDEDED !important;
@@ -27,7 +31,7 @@ body{
 
 
 <center>
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide leftp upp" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -96,10 +100,12 @@ body{
             {% endif %}
 
           </div>
+
+          <h5>Share</h5>
           {% load social_share %}
           {% post_to_facebook object_or_url "<p style='color: blue;'>facebook</p>" %}
-          {% post_to_telegram "See the amazing product " object_or_url %}
           {% post_to_whatsapp object_or_url "<p style='color: green;'>whatsapp</p>" %}
+          {% post_to_telegram object_or_url "<p style='color: blue;'>telegram</p>" %}
     </div>
     
   </div>

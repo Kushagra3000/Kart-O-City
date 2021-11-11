@@ -49,7 +49,7 @@
                     <div class="form-group">
                       <label>Email</label>
                       {% csrf_token %}
-                      <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email">
+                      <input required class="form-control form-control-lg" type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Enter your email">
                     </div>
                     <div class="text-center mt-3">
                       <button type="submit" class="btn btn-lg btn-primary">Reset password</button>

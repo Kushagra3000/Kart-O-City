@@ -41,7 +41,7 @@
                 <!-- email -->
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input required type="email" name="email" id=""
+                    <input required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" name="email" id=""
                     value="{{values.email|safe}}" 
                     class=" form-control-sm form-control" placeholder="example@gmail.com">
                 </div>
@@ -50,7 +50,8 @@
                 <!-- password -->
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="password" 
+                    <input required type="password" 
+                    name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"  type="password" 
                     name="password" 
                     id=""
                      class="form-control form-control-sm" placeholder="********">

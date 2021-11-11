@@ -519,7 +519,7 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 <body>  <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand mb-2" href="/">
-      <img src="https://i.ibb.co/VvCtCnJ/new-Kartocity-logo.png" width="200" height="60" alt="Screenshot-2021-10-20-230640" border="0">
+      <img src="https://i.ibb.co/QHXWKtv/Screenshot-2021-10-20-230640.png" width="200" height="60" alt="Screenshot-2021-10-20-230640" border="0">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -545,7 +545,7 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
       </ul>
       <form class="navbar-collapse left" method=POST action="{% url 'search-products' %}">
         {% csrf_token %}
-        <input class="form-control me-2 " type="search" placeholder="Search Products" name="searched">
+        <input pattern="[a-zA-Z0-9_]*$" class="form-control me-2 " type="search" placeholder="Search Products" name="searched">
         <button type="submit" class="btn btn-outline-success mb-2 btn-outline-dark">Search</button>
       </form>
 

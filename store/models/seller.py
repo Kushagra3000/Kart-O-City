@@ -30,8 +30,8 @@ class Seller(models.Model):
     phone = models.CharField(max_length=15)
     email = models.EmailField()
     password = models.CharField(max_length=500)
-    panCard = models.FileField(upload_to='Kart-O-City/uploads/userdocuments', null=True)
-    gstDocument = models.FileField(upload_to='Kart-O-City/uploads/userdocuments', null=True)
+    panCard = models.FileField(upload_to='HAAw60mUKMN8z9ewjHvcIOMUQMXX6lMr/uploads/userdocuments', null=True)
+    gstDocument = models.FileField(upload_to='HAAw60mUKMN8z9ewjHvcIOMUQMXX6lMr/uploads/userdocuments', null=True)
     status = models.CharField(max_length=50,default="not verified")
     
 

@@ -12,7 +12,7 @@
                     <form action="{% url 'otpcheckout' %}" method="post">
                         {% csrf_token %}
                         <center><h2>OTP</h2></center>
-                        <input  type="text" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email|safe}}" />
+                        <input  type="text" pattern="[0-9]{6}" name="otp" id="testvirtual" class = "jQKeyboard form-control" placeholder="Enter your 6 digits OTP sent on {{email|safe}}" />
                         <input hidden="" type="text" name='email' value='{{email|safe}}'>
                         <input hidden="" type="text" name='address' value='{{address|safe}}'>
                         <input hidden="" type="number" name='total_price' value='{{total_price|safe}}'>

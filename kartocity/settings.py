@@ -123,6 +123,14 @@ USE_L10N = True
 USE_TZ = True
 
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIAYTNN6OINVLJSX76U'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'mykartocity-bucket'
+AWS_QUERYSTRING_AUTH = False
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 

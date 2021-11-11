@@ -22,22 +22,22 @@
                 <form action="/editprofile" method="POST">
                     {% csrf_token %}
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" name="first_name" value="{{first_name|safe}}" placeholder="first name"></div>
-                    <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" name="last_name" value="{{last_name|safe}}" placeholder="last name"></div>
+                    <div class="col-md-6"><label class="labels">First Name</label><input required type="text" class="form-control" name="first_name" pattern="[A-Za-z]{3,20}" title="First name can only contain alphabets length between 3-20" value="{{first_name|safe}}" placeholder="first name"></div>
+                    <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" name="last_name" pattern="[A-Za-z]{3,20}" title="Last name can only contain alphabets length between 3-20" value="{{last_name|safe}}" placeholder="last name"></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" name="phone" value="{{phone|safe}}"></div>
+                    <div class="col-md-12"><label class="labels">Mobile Number</label><input required type="text" class="form-control" placeholder="enter phone number" name="phone" pattern="[0-9]{10}" title="Phone number can only contain integers 10 digits long" value="{{phone|safe}}"></div>
                   
-                    <div class="col-md-12"><label class="labels">Email ID</label><input required type="email" name="email" id=""
+                    <div class="col-md-12"><label class="labels">Email ID</label><input required required type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" id=""
                     value="{{email|safe}}" 
                     class=" form-control-sm form-control" placeholder="example@gmail.com">
 
-                    <div class="col-md-12"><label class="labels">Password</label><input type="password" class="form-control" name="password" placeholder="enter password to save changes" value=""></div>
+                    <div class="col-md-12"><label class="labels">Password</label><input required type="password" class="form-control" name="password" placeholder="enter password to save changes" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" value=""></div>
                 </div>
                 {% if manageotp%}
                         <div class="form-group">
                           <label for="">Enter OTP sent on your new email id</label>
-                          <input type="text" name="otp" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                          <input required type="text" name="otp" id="" class="form-control" placeholder="" pattern="[0-9]{6}" aria-describedby="helpId">
                         </div>
                      <div class="form-group">
                          <input class="btn btn-sm btn-info col-lg-8" type="submit" value="OTP">
@@ -48,7 +48,7 @@
             </div>
 
         </div>
-        
+         
     </div>
 </div>
 </div>

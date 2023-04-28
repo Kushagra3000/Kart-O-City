@@ -15,7 +15,7 @@
 
 **Kart-O-City **: 
 
-A secure and aesthetic web e-commerce application that allows customers to purchase apparel, mobiles, toys and other electronics through verified and encrypted transaction channels, while also allowing sellers to put up their items for sale.
+A secure and aesthetic web e-commerce application that allows customers to purchase apparel, toys, mobiles and other electronics through verified and encrypted transaction channels, while also allowing sellers to put up their items for sale.
 
  
 
